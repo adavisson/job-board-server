@@ -11,7 +11,7 @@ const companyResolvers = {
   },
   Mutation: {
     createCompany: async (parent, args, context, info) => {
-      const userId = getUserid(context)
+      const userId = getUserId(context)
       const company = await context.prisma.createCompany(args)
       return company
     }
