@@ -1,4 +1,18 @@
+
 type User {
   id: ID! @id
   name: String!
+  email: String! @unique
+  password: String!
+  Bio: String
+  Age: Int
+  Gender: GenderOptions
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum GenderOptions {
+  male
+  female
+  other
 }
