@@ -1,5 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga');
 const port = 4000;
+const { typeDefs } = require('./typeDefs');
 
 const resolvers = {
   Query: {
@@ -8,7 +9,7 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: typeDefs,
   resolvers
   //Add context
 });
