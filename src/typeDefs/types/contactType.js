@@ -8,6 +8,7 @@ const contactType = gql`
     phoneNumber: String
     jobTitle: String
     user: User!
+    company: Company
   }
 `
 
