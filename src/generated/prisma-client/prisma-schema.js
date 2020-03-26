@@ -63,9 +63,9 @@ type User {
   name: String!
   email: String!
   password: String!
-  Bio: String
-  Age: Int
-  Gender: GenderOptions
+  bio: String
+  age: Int
+  gender: GenderOptions
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -81,9 +81,9 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  Bio: String
-  Age: Int
-  Gender: GenderOptions
+  bio: String
+  age: Int
+  gender: GenderOptions
 }
 
 type UserEdge {
@@ -100,12 +100,12 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
-  Bio_ASC
-  Bio_DESC
-  Age_ASC
-  Age_DESC
-  Gender_ASC
-  Gender_DESC
+  bio_ASC
+  bio_DESC
+  age_ASC
+  age_DESC
+  gender_ASC
+  gender_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -117,9 +117,9 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
-  Bio: String
-  Age: Int
-  Gender: GenderOptions
+  bio: String
+  age: Int
+  gender: GenderOptions
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -146,18 +146,18 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  Bio: String
-  Age: Int
-  Gender: GenderOptions
+  bio: String
+  age: Int
+  gender: GenderOptions
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
-  Bio: String
-  Age: Int
-  Gender: GenderOptions
+  bio: String
+  age: Int
+  gender: GenderOptions
 }
 
 input UserWhereInput {
@@ -217,32 +217,32 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  Bio: String
-  Bio_not: String
-  Bio_in: [String!]
-  Bio_not_in: [String!]
-  Bio_lt: String
-  Bio_lte: String
-  Bio_gt: String
-  Bio_gte: String
-  Bio_contains: String
-  Bio_not_contains: String
-  Bio_starts_with: String
-  Bio_not_starts_with: String
-  Bio_ends_with: String
-  Bio_not_ends_with: String
-  Age: Int
-  Age_not: Int
-  Age_in: [Int!]
-  Age_not_in: [Int!]
-  Age_lt: Int
-  Age_lte: Int
-  Age_gt: Int
-  Age_gte: Int
-  Gender: GenderOptions
-  Gender_not: GenderOptions
-  Gender_in: [GenderOptions!]
-  Gender_not_in: [GenderOptions!]
+  bio: String
+  bio_not: String
+  bio_in: [String!]
+  bio_not_in: [String!]
+  bio_lt: String
+  bio_lte: String
+  bio_gt: String
+  bio_gte: String
+  bio_contains: String
+  bio_not_contains: String
+  bio_starts_with: String
+  bio_not_starts_with: String
+  bio_ends_with: String
+  bio_not_ends_with: String
+  age: Int
+  age_not: Int
+  age_in: [Int!]
+  age_not_in: [Int!]
+  age_lt: Int
+  age_lte: Int
+  age_gt: Int
+  age_gte: Int
+  gender: GenderOptions
+  gender_not: GenderOptions
+  gender_in: [GenderOptions!]
+  gender_not_in: [GenderOptions!]
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

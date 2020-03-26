@@ -112,12 +112,12 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
-  | "Bio_ASC"
-  | "Bio_DESC"
-  | "Age_ASC"
-  | "Age_DESC"
-  | "Gender_ASC"
-  | "Gender_DESC"
+  | "bio_ASC"
+  | "bio_DESC"
+  | "age_ASC"
+  | "age_DESC"
+  | "gender_ASC"
+  | "gender_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -187,32 +187,32 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  Bio?: Maybe<String>;
-  Bio_not?: Maybe<String>;
-  Bio_in?: Maybe<String[] | String>;
-  Bio_not_in?: Maybe<String[] | String>;
-  Bio_lt?: Maybe<String>;
-  Bio_lte?: Maybe<String>;
-  Bio_gt?: Maybe<String>;
-  Bio_gte?: Maybe<String>;
-  Bio_contains?: Maybe<String>;
-  Bio_not_contains?: Maybe<String>;
-  Bio_starts_with?: Maybe<String>;
-  Bio_not_starts_with?: Maybe<String>;
-  Bio_ends_with?: Maybe<String>;
-  Bio_not_ends_with?: Maybe<String>;
-  Age?: Maybe<Int>;
-  Age_not?: Maybe<Int>;
-  Age_in?: Maybe<Int[] | Int>;
-  Age_not_in?: Maybe<Int[] | Int>;
-  Age_lt?: Maybe<Int>;
-  Age_lte?: Maybe<Int>;
-  Age_gt?: Maybe<Int>;
-  Age_gte?: Maybe<Int>;
-  Gender?: Maybe<GenderOptions>;
-  Gender_not?: Maybe<GenderOptions>;
-  Gender_in?: Maybe<GenderOptions[] | GenderOptions>;
-  Gender_not_in?: Maybe<GenderOptions[] | GenderOptions>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  age?: Maybe<Int>;
+  age_not?: Maybe<Int>;
+  age_in?: Maybe<Int[] | Int>;
+  age_not_in?: Maybe<Int[] | Int>;
+  age_lt?: Maybe<Int>;
+  age_lte?: Maybe<Int>;
+  age_gt?: Maybe<Int>;
+  age_gte?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
+  gender_not?: Maybe<GenderOptions>;
+  gender_in?: Maybe<GenderOptions[] | GenderOptions>;
+  gender_not_in?: Maybe<GenderOptions[] | GenderOptions>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -239,27 +239,27 @@ export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
-  Bio?: Maybe<String>;
-  Age?: Maybe<Int>;
-  Gender?: Maybe<GenderOptions>;
+  bio?: Maybe<String>;
+  age?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  Bio?: Maybe<String>;
-  Age?: Maybe<Int>;
-  Gender?: Maybe<GenderOptions>;
+  bio?: Maybe<String>;
+  age?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
 }
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  Bio?: Maybe<String>;
-  Age?: Maybe<Int>;
-  Gender?: Maybe<GenderOptions>;
+  bio?: Maybe<String>;
+  age?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -282,9 +282,9 @@ export interface User {
   name: String;
   email: String;
   password: String;
-  Bio?: String;
-  Age?: Int;
-  Gender?: GenderOptions;
+  bio?: String;
+  age?: Int;
+  gender?: GenderOptions;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -294,9 +294,9 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  Bio: () => Promise<String>;
-  Age: () => Promise<Int>;
-  Gender: () => Promise<GenderOptions>;
+  bio: () => Promise<String>;
+  age: () => Promise<Int>;
+  gender: () => Promise<GenderOptions>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -308,9 +308,9 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  Bio: () => Promise<AsyncIterator<String>>;
-  Age: () => Promise<AsyncIterator<Int>>;
-  Gender: () => Promise<AsyncIterator<GenderOptions>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  age: () => Promise<AsyncIterator<Int>>;
+  gender: () => Promise<AsyncIterator<GenderOptions>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -322,9 +322,9 @@ export interface UserNullablePromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  Bio: () => Promise<String>;
-  Age: () => Promise<Int>;
-  Gender: () => Promise<GenderOptions>;
+  bio: () => Promise<String>;
+  age: () => Promise<Int>;
+  gender: () => Promise<GenderOptions>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -452,9 +452,9 @@ export interface UserPreviousValues {
   name: String;
   email: String;
   password: String;
-  Bio?: String;
-  Age?: Int;
-  Gender?: GenderOptions;
+  bio?: String;
+  age?: Int;
+  gender?: GenderOptions;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -466,9 +466,9 @@ export interface UserPreviousValuesPromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  Bio: () => Promise<String>;
-  Age: () => Promise<Int>;
-  Gender: () => Promise<GenderOptions>;
+  bio: () => Promise<String>;
+  age: () => Promise<Int>;
+  gender: () => Promise<GenderOptions>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -480,9 +480,9 @@ export interface UserPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  Bio: () => Promise<AsyncIterator<String>>;
-  Age: () => Promise<AsyncIterator<Int>>;
-  Gender: () => Promise<AsyncIterator<GenderOptions>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  age: () => Promise<AsyncIterator<Int>>;
+  gender: () => Promise<AsyncIterator<GenderOptions>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
