@@ -1,16 +1,11 @@
 const { GraphQLServer } = require('graphql-yoga');
 const port = 4000;
 const { typeDefs } = require('./typeDefs');
-
-const resolvers = {
-  Query: {
-    hello: () => "Hello"
-  }
-}
+const { resolvers } = require('./resolvers');
 
 const server = new GraphQLServer({
   typeDefs: typeDefs,
-  resolvers
+  resolvers: resolvers,
   //Add context
 });
 server.start(({port: port}) => console.log(`Server started on http://localhost:${port}`));
