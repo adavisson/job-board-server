@@ -24,5 +24,5 @@ type Contact {
   email: String
   phoneNumber: String
   jobTitle: String
-  user: User
+  user: User!
 }
