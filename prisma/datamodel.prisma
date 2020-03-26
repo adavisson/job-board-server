@@ -12,7 +12,7 @@ type User {
 }
 
 enum GenderOptions {
-  male
-  female
-  other
+  MALE
+  FEMALE
+  OTHER
 }
