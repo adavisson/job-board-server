@@ -34,7 +34,7 @@ type Company {
   id: ID! @id
   name: String!
   address: String
-  phone: String
+  phoneNumber: String
   website: String
   employees: [Contact!]!
   createdAt: DateTime! @createdAt
