@@ -5,7 +5,7 @@ const query = gql`
     hello: String!
     name: String!
     contacts: [Contact!]!
-    companyContacts(companyId: ID!): [Contacts!]!
+    employees(companyId: ID!): [Contacts!]!
   }
 `
 
