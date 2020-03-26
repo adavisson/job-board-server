@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateContact {
+/* GraphQL */ `type AggregateCompany {
+  count: Int!
+}
+
+type AggregateContact {
   count: Int!
 }
 
@@ -15,6 +19,230 @@ type BatchPayload {
   count: Long!
 }
 
+type Company {
+  id: ID!
+  name: String!
+  address: String
+  phone: String
+  website: String
+  employees(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CompanyConnection {
+  pageInfo: PageInfo!
+  edges: [CompanyEdge]!
+  aggregate: AggregateCompany!
+}
+
+input CompanyCreateInput {
+  id: ID
+  name: String!
+  address: String
+  phone: String
+  website: String
+  employees: ContactCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateOneWithoutEmployeesInput {
+  create: CompanyCreateWithoutEmployeesInput
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyCreateWithoutEmployeesInput {
+  id: ID
+  name: String!
+  address: String
+  phone: String
+  website: String
+}
+
+type CompanyEdge {
+  node: Company!
+  cursor: String!
+}
+
+enum CompanyOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  address_ASC
+  address_DESC
+  phone_ASC
+  phone_DESC
+  website_ASC
+  website_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CompanyPreviousValues {
+  id: ID!
+  name: String!
+  address: String
+  phone: String
+  website: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CompanySubscriptionPayload {
+  mutation: MutationType!
+  node: Company
+  updatedFields: [String!]
+  previousValues: CompanyPreviousValues
+}
+
+input CompanySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CompanyWhereInput
+  AND: [CompanySubscriptionWhereInput!]
+  OR: [CompanySubscriptionWhereInput!]
+  NOT: [CompanySubscriptionWhereInput!]
+}
+
+input CompanyUpdateInput {
+  name: String
+  address: String
+  phone: String
+  website: String
+  employees: ContactUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateManyMutationInput {
+  name: String
+  address: String
+  phone: String
+  website: String
+}
+
+input CompanyUpdateOneWithoutEmployeesInput {
+  create: CompanyCreateWithoutEmployeesInput
+  update: CompanyUpdateWithoutEmployeesDataInput
+  upsert: CompanyUpsertWithoutEmployeesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyUpdateWithoutEmployeesDataInput {
+  name: String
+  address: String
+  phone: String
+  website: String
+}
+
+input CompanyUpsertWithoutEmployeesInput {
+  update: CompanyUpdateWithoutEmployeesDataInput!
+  create: CompanyCreateWithoutEmployeesInput!
+}
+
+input CompanyWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  employees_every: ContactWhereInput
+  employees_some: ContactWhereInput
+  employees_none: ContactWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [CompanyWhereInput!]
+  OR: [CompanyWhereInput!]
+  NOT: [CompanyWhereInput!]
+}
+
+input CompanyWhereUniqueInput {
+  id: ID
+}
+
 type Contact {
   id: ID!
   name: String!
@@ -22,6 +250,9 @@ type Contact {
   phoneNumber: String
   jobTitle: String
   user: User!
+  company: Company
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ContactConnection {
@@ -37,11 +268,26 @@ input ContactCreateInput {
   phoneNumber: String
   jobTitle: String
   user: UserCreateOneWithoutContactsInput!
+  company: CompanyCreateOneWithoutEmployeesInput
+}
+
+input ContactCreateManyWithoutCompanyInput {
+  create: [ContactCreateWithoutCompanyInput!]
+  connect: [ContactWhereUniqueInput!]
 }
 
 input ContactCreateManyWithoutUserInput {
   create: [ContactCreateWithoutUserInput!]
   connect: [ContactWhereUniqueInput!]
+}
+
+input ContactCreateWithoutCompanyInput {
+  id: ID
+  name: String!
+  email: String
+  phoneNumber: String
+  jobTitle: String
+  user: UserCreateOneWithoutContactsInput!
 }
 
 input ContactCreateWithoutUserInput {
@@ -50,6 +296,7 @@ input ContactCreateWithoutUserInput {
   email: String
   phoneNumber: String
   jobTitle: String
+  company: CompanyCreateOneWithoutEmployeesInput
 }
 
 type ContactEdge {
@@ -68,6 +315,10 @@ enum ContactOrderByInput {
   phoneNumber_DESC
   jobTitle_ASC
   jobTitle_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ContactPreviousValues {
@@ -76,6 +327,8 @@ type ContactPreviousValues {
   email: String
   phoneNumber: String
   jobTitle: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input ContactScalarWhereInput {
@@ -149,6 +402,22 @@ input ContactScalarWhereInput {
   jobTitle_not_starts_with: String
   jobTitle_ends_with: String
   jobTitle_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ContactScalarWhereInput!]
   OR: [ContactScalarWhereInput!]
   NOT: [ContactScalarWhereInput!]
@@ -178,6 +447,7 @@ input ContactUpdateInput {
   phoneNumber: String
   jobTitle: String
   user: UserUpdateOneRequiredWithoutContactsInput
+  company: CompanyUpdateOneWithoutEmployeesInput
 }
 
 input ContactUpdateManyDataInput {
@@ -192,6 +462,18 @@ input ContactUpdateManyMutationInput {
   email: String
   phoneNumber: String
   jobTitle: String
+}
+
+input ContactUpdateManyWithoutCompanyInput {
+  create: [ContactCreateWithoutCompanyInput!]
+  delete: [ContactWhereUniqueInput!]
+  connect: [ContactWhereUniqueInput!]
+  set: [ContactWhereUniqueInput!]
+  disconnect: [ContactWhereUniqueInput!]
+  update: [ContactUpdateWithWhereUniqueWithoutCompanyInput!]
+  upsert: [ContactUpsertWithWhereUniqueWithoutCompanyInput!]
+  deleteMany: [ContactScalarWhereInput!]
+  updateMany: [ContactUpdateManyWithWhereNestedInput!]
 }
 
 input ContactUpdateManyWithoutUserInput {
@@ -211,16 +493,36 @@ input ContactUpdateManyWithWhereNestedInput {
   data: ContactUpdateManyDataInput!
 }
 
+input ContactUpdateWithoutCompanyDataInput {
+  name: String
+  email: String
+  phoneNumber: String
+  jobTitle: String
+  user: UserUpdateOneRequiredWithoutContactsInput
+}
+
 input ContactUpdateWithoutUserDataInput {
   name: String
   email: String
   phoneNumber: String
   jobTitle: String
+  company: CompanyUpdateOneWithoutEmployeesInput
+}
+
+input ContactUpdateWithWhereUniqueWithoutCompanyInput {
+  where: ContactWhereUniqueInput!
+  data: ContactUpdateWithoutCompanyDataInput!
 }
 
 input ContactUpdateWithWhereUniqueWithoutUserInput {
   where: ContactWhereUniqueInput!
   data: ContactUpdateWithoutUserDataInput!
+}
+
+input ContactUpsertWithWhereUniqueWithoutCompanyInput {
+  where: ContactWhereUniqueInput!
+  update: ContactUpdateWithoutCompanyDataInput!
+  create: ContactCreateWithoutCompanyInput!
 }
 
 input ContactUpsertWithWhereUniqueWithoutUserInput {
@@ -301,6 +603,23 @@ input ContactWhereInput {
   jobTitle_ends_with: String
   jobTitle_not_ends_with: String
   user: UserWhereInput
+  company: CompanyWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ContactWhereInput!]
   OR: [ContactWhereInput!]
   NOT: [ContactWhereInput!]
@@ -321,6 +640,12 @@ enum GenderOptions {
 scalar Long
 
 type Mutation {
+  createCompany(data: CompanyCreateInput!): Company!
+  updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
+  updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
+  upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
+  deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
   createContact(data: ContactCreateInput!): Contact!
   updateContact(data: ContactUpdateInput!, where: ContactWhereUniqueInput!): Contact
   updateManyContacts(data: ContactUpdateManyMutationInput!, where: ContactWhereInput): BatchPayload!
@@ -353,6 +678,9 @@ type PageInfo {
 }
 
 type Query {
+  company(where: CompanyWhereUniqueInput!): Company
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
+  companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
   contact(where: ContactWhereUniqueInput!): Contact
   contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact]!
   contactsConnection(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContactConnection!
@@ -363,6 +691,7 @@ type Query {
 }
 
 type Subscription {
+  company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
   contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }

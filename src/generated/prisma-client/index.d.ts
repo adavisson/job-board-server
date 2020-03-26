@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  company: (where?: CompanyWhereInput) => Promise<boolean>;
   contact: (where?: ContactWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -39,6 +40,25 @@ export interface Prisma {
    * Queries
    */
 
+  company: (where: CompanyWhereUniqueInput) => CompanyNullablePromise;
+  companies: (args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Company>;
+  companiesConnection: (args?: {
+    where?: CompanyWhereInput;
+    orderBy?: CompanyOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => CompanyConnectionPromise;
   contact: (where: ContactWhereUniqueInput) => ContactNullablePromise;
   contacts: (args?: {
     where?: ContactWhereInput;
@@ -83,6 +103,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createCompany: (data: CompanyCreateInput) => CompanyPromise;
+  updateCompany: (args: {
+    data: CompanyUpdateInput;
+    where: CompanyWhereUniqueInput;
+  }) => CompanyPromise;
+  updateManyCompanies: (args: {
+    data: CompanyUpdateManyMutationInput;
+    where?: CompanyWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCompany: (args: {
+    where: CompanyWhereUniqueInput;
+    create: CompanyCreateInput;
+    update: CompanyUpdateInput;
+  }) => CompanyPromise;
+  deleteCompany: (where: CompanyWhereUniqueInput) => CompanyPromise;
+  deleteManyCompanies: (where?: CompanyWhereInput) => BatchPayloadPromise;
   createContact: (data: ContactCreateInput) => ContactPromise;
   updateContact: (args: {
     data: ContactUpdateInput;
@@ -124,6 +160,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  company: (
+    where?: CompanySubscriptionWhereInput
+  ) => CompanySubscriptionPayloadSubscription;
   contact: (
     where?: ContactSubscriptionWhereInput
   ) => ContactSubscriptionPayloadSubscription;
@@ -152,7 +191,27 @@ export type ContactOrderByInput =
   | "phoneNumber_ASC"
   | "phoneNumber_DESC"
   | "jobTitle_ASC"
-  | "jobTitle_DESC";
+  | "jobTitle_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type CompanyOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "address_ASC"
+  | "address_DESC"
+  | "phone_ASC"
+  | "phone_DESC"
+  | "website_ASC"
+  | "website_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -176,7 +235,7 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type ContactWhereUniqueInput = AtLeastOne<{
+export type CompanyWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -252,6 +311,23 @@ export interface ContactWhereInput {
   jobTitle_ends_with?: Maybe<String>;
   jobTitle_not_ends_with?: Maybe<String>;
   user?: Maybe<UserWhereInput>;
+  company?: Maybe<CompanyWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ContactWhereInput[] | ContactWhereInput>;
   OR?: Maybe<ContactWhereInput[] | ContactWhereInput>;
   NOT?: Maybe<ContactWhereInput[] | ContactWhereInput>;
@@ -364,12 +440,127 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface CompanyWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  address?: Maybe<String>;
+  address_not?: Maybe<String>;
+  address_in?: Maybe<String[] | String>;
+  address_not_in?: Maybe<String[] | String>;
+  address_lt?: Maybe<String>;
+  address_lte?: Maybe<String>;
+  address_gt?: Maybe<String>;
+  address_gte?: Maybe<String>;
+  address_contains?: Maybe<String>;
+  address_not_contains?: Maybe<String>;
+  address_starts_with?: Maybe<String>;
+  address_not_starts_with?: Maybe<String>;
+  address_ends_with?: Maybe<String>;
+  address_not_ends_with?: Maybe<String>;
+  phone?: Maybe<String>;
+  phone_not?: Maybe<String>;
+  phone_in?: Maybe<String[] | String>;
+  phone_not_in?: Maybe<String[] | String>;
+  phone_lt?: Maybe<String>;
+  phone_lte?: Maybe<String>;
+  phone_gt?: Maybe<String>;
+  phone_gte?: Maybe<String>;
+  phone_contains?: Maybe<String>;
+  phone_not_contains?: Maybe<String>;
+  phone_starts_with?: Maybe<String>;
+  phone_not_starts_with?: Maybe<String>;
+  phone_ends_with?: Maybe<String>;
+  phone_not_ends_with?: Maybe<String>;
+  website?: Maybe<String>;
+  website_not?: Maybe<String>;
+  website_in?: Maybe<String[] | String>;
+  website_not_in?: Maybe<String[] | String>;
+  website_lt?: Maybe<String>;
+  website_lte?: Maybe<String>;
+  website_gt?: Maybe<String>;
+  website_gte?: Maybe<String>;
+  website_contains?: Maybe<String>;
+  website_not_contains?: Maybe<String>;
+  website_starts_with?: Maybe<String>;
+  website_not_starts_with?: Maybe<String>;
+  website_ends_with?: Maybe<String>;
+  website_not_ends_with?: Maybe<String>;
+  employees_every?: Maybe<ContactWhereInput>;
+  employees_some?: Maybe<ContactWhereInput>;
+  employees_none?: Maybe<ContactWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
+  OR?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
+  NOT?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
+}
+
+export type ContactWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   email?: Maybe<String>;
 }>;
 
-export interface ContactCreateInput {
+export interface CompanyCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  address?: Maybe<String>;
+  phone?: Maybe<String>;
+  website?: Maybe<String>;
+  employees?: Maybe<ContactCreateManyWithoutCompanyInput>;
+}
+
+export interface ContactCreateManyWithoutCompanyInput {
+  create?: Maybe<
+    ContactCreateWithoutCompanyInput[] | ContactCreateWithoutCompanyInput
+  >;
+  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+}
+
+export interface ContactCreateWithoutCompanyInput {
   id?: Maybe<ID_Input>;
   name: String;
   email?: Maybe<String>;
@@ -393,7 +584,43 @@ export interface UserCreateWithoutContactsInput {
   gender?: Maybe<GenderOptions>;
 }
 
-export interface ContactUpdateInput {
+export interface CompanyUpdateInput {
+  name?: Maybe<String>;
+  address?: Maybe<String>;
+  phone?: Maybe<String>;
+  website?: Maybe<String>;
+  employees?: Maybe<ContactUpdateManyWithoutCompanyInput>;
+}
+
+export interface ContactUpdateManyWithoutCompanyInput {
+  create?: Maybe<
+    ContactCreateWithoutCompanyInput[] | ContactCreateWithoutCompanyInput
+  >;
+  delete?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  set?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  disconnect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  update?: Maybe<
+    | ContactUpdateWithWhereUniqueWithoutCompanyInput[]
+    | ContactUpdateWithWhereUniqueWithoutCompanyInput
+  >;
+  upsert?: Maybe<
+    | ContactUpsertWithWhereUniqueWithoutCompanyInput[]
+    | ContactUpsertWithWhereUniqueWithoutCompanyInput
+  >;
+  deleteMany?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
+  updateMany?: Maybe<
+    | ContactUpdateManyWithWhereNestedInput[]
+    | ContactUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ContactUpdateWithWhereUniqueWithoutCompanyInput {
+  where: ContactWhereUniqueInput;
+  data: ContactUpdateWithoutCompanyDataInput;
+}
+
+export interface ContactUpdateWithoutCompanyDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   phoneNumber?: Maybe<String>;
@@ -422,88 +649,10 @@ export interface UserUpsertWithoutContactsInput {
   create: UserCreateWithoutContactsInput;
 }
 
-export interface ContactUpdateManyMutationInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  jobTitle?: Maybe<String>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  bio?: Maybe<String>;
-  age?: Maybe<Int>;
-  gender?: Maybe<GenderOptions>;
-  contacts?: Maybe<ContactCreateManyWithoutUserInput>;
-}
-
-export interface ContactCreateManyWithoutUserInput {
-  create?: Maybe<
-    ContactCreateWithoutUserInput[] | ContactCreateWithoutUserInput
-  >;
-  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
-}
-
-export interface ContactCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  jobTitle?: Maybe<String>;
-}
-
-export interface UserUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  bio?: Maybe<String>;
-  age?: Maybe<Int>;
-  gender?: Maybe<GenderOptions>;
-  contacts?: Maybe<ContactUpdateManyWithoutUserInput>;
-}
-
-export interface ContactUpdateManyWithoutUserInput {
-  create?: Maybe<
-    ContactCreateWithoutUserInput[] | ContactCreateWithoutUserInput
-  >;
-  delete?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
-  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
-  set?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
-  disconnect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
-  update?: Maybe<
-    | ContactUpdateWithWhereUniqueWithoutUserInput[]
-    | ContactUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | ContactUpsertWithWhereUniqueWithoutUserInput[]
-    | ContactUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
-  updateMany?: Maybe<
-    | ContactUpdateManyWithWhereNestedInput[]
-    | ContactUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ContactUpdateWithWhereUniqueWithoutUserInput {
+export interface ContactUpsertWithWhereUniqueWithoutCompanyInput {
   where: ContactWhereUniqueInput;
-  data: ContactUpdateWithoutUserDataInput;
-}
-
-export interface ContactUpdateWithoutUserDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  jobTitle?: Maybe<String>;
-}
-
-export interface ContactUpsertWithWhereUniqueWithoutUserInput {
-  where: ContactWhereUniqueInput;
-  update: ContactUpdateWithoutUserDataInput;
-  create: ContactCreateWithoutUserInput;
+  update: ContactUpdateWithoutCompanyDataInput;
+  create: ContactCreateWithoutCompanyInput;
 }
 
 export interface ContactScalarWhereInput {
@@ -577,6 +726,22 @@ export interface ContactScalarWhereInput {
   jobTitle_not_starts_with?: Maybe<String>;
   jobTitle_ends_with?: Maybe<String>;
   jobTitle_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
   OR?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
   NOT?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
@@ -594,6 +759,152 @@ export interface ContactUpdateManyDataInput {
   jobTitle?: Maybe<String>;
 }
 
+export interface CompanyUpdateManyMutationInput {
+  name?: Maybe<String>;
+  address?: Maybe<String>;
+  phone?: Maybe<String>;
+  website?: Maybe<String>;
+}
+
+export interface ContactCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+  user: UserCreateOneWithoutContactsInput;
+  company?: Maybe<CompanyCreateOneWithoutEmployeesInput>;
+}
+
+export interface CompanyCreateOneWithoutEmployeesInput {
+  create?: Maybe<CompanyCreateWithoutEmployeesInput>;
+  connect?: Maybe<CompanyWhereUniqueInput>;
+}
+
+export interface CompanyCreateWithoutEmployeesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  address?: Maybe<String>;
+  phone?: Maybe<String>;
+  website?: Maybe<String>;
+}
+
+export interface ContactUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutContactsInput>;
+  company?: Maybe<CompanyUpdateOneWithoutEmployeesInput>;
+}
+
+export interface CompanyUpdateOneWithoutEmployeesInput {
+  create?: Maybe<CompanyCreateWithoutEmployeesInput>;
+  update?: Maybe<CompanyUpdateWithoutEmployeesDataInput>;
+  upsert?: Maybe<CompanyUpsertWithoutEmployeesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<CompanyWhereUniqueInput>;
+}
+
+export interface CompanyUpdateWithoutEmployeesDataInput {
+  name?: Maybe<String>;
+  address?: Maybe<String>;
+  phone?: Maybe<String>;
+  website?: Maybe<String>;
+}
+
+export interface CompanyUpsertWithoutEmployeesInput {
+  update: CompanyUpdateWithoutEmployeesDataInput;
+  create: CompanyCreateWithoutEmployeesInput;
+}
+
+export interface ContactUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  bio?: Maybe<String>;
+  age?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
+  contacts?: Maybe<ContactCreateManyWithoutUserInput>;
+}
+
+export interface ContactCreateManyWithoutUserInput {
+  create?: Maybe<
+    ContactCreateWithoutUserInput[] | ContactCreateWithoutUserInput
+  >;
+  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+}
+
+export interface ContactCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+  company?: Maybe<CompanyCreateOneWithoutEmployeesInput>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  bio?: Maybe<String>;
+  age?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
+  contacts?: Maybe<ContactUpdateManyWithoutUserInput>;
+}
+
+export interface ContactUpdateManyWithoutUserInput {
+  create?: Maybe<
+    ContactCreateWithoutUserInput[] | ContactCreateWithoutUserInput
+  >;
+  delete?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  set?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  disconnect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  update?: Maybe<
+    | ContactUpdateWithWhereUniqueWithoutUserInput[]
+    | ContactUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | ContactUpsertWithWhereUniqueWithoutUserInput[]
+    | ContactUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
+  updateMany?: Maybe<
+    | ContactUpdateManyWithWhereNestedInput[]
+    | ContactUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ContactUpdateWithWhereUniqueWithoutUserInput {
+  where: ContactWhereUniqueInput;
+  data: ContactUpdateWithoutUserDataInput;
+}
+
+export interface ContactUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+  company?: Maybe<CompanyUpdateOneWithoutEmployeesInput>;
+}
+
+export interface ContactUpsertWithWhereUniqueWithoutUserInput {
+  where: ContactWhereUniqueInput;
+  update: ContactUpdateWithoutUserDataInput;
+  create: ContactCreateWithoutUserInput;
+}
+
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
@@ -601,6 +912,17 @@ export interface UserUpdateManyMutationInput {
   bio?: Maybe<String>;
   age?: Maybe<Int>;
   gender?: Maybe<GenderOptions>;
+}
+
+export interface CompanySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CompanyWhereInput>;
+  AND?: Maybe<CompanySubscriptionWhereInput[] | CompanySubscriptionWhereInput>;
+  OR?: Maybe<CompanySubscriptionWhereInput[] | CompanySubscriptionWhereInput>;
+  NOT?: Maybe<CompanySubscriptionWhereInput[] | CompanySubscriptionWhereInput>;
 }
 
 export interface ContactSubscriptionWhereInput {
@@ -629,12 +951,85 @@ export interface NodeNode {
   id: ID_Output;
 }
 
+export interface Company {
+  id: ID_Output;
+  name: String;
+  address?: String;
+  phone?: String;
+  website?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CompanyPromise extends Promise<Company>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  address: () => Promise<String>;
+  phone: () => Promise<String>;
+  website: () => Promise<String>;
+  employees: <T = FragmentableArray<Contact>>(args?: {
+    where?: ContactWhereInput;
+    orderBy?: ContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CompanySubscription
+  extends Promise<AsyncIterator<Company>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  website: () => Promise<AsyncIterator<String>>;
+  employees: <T = Promise<AsyncIterator<ContactSubscription>>>(args?: {
+    where?: ContactWhereInput;
+    orderBy?: ContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CompanyNullablePromise
+  extends Promise<Company | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  address: () => Promise<String>;
+  phone: () => Promise<String>;
+  website: () => Promise<String>;
+  employees: <T = FragmentableArray<Contact>>(args?: {
+    where?: ContactWhereInput;
+    orderBy?: ContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
 export interface Contact {
   id: ID_Output;
   name: String;
   email?: String;
   phoneNumber?: String;
   jobTitle?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface ContactPromise extends Promise<Contact>, Fragmentable {
@@ -644,6 +1039,9 @@ export interface ContactPromise extends Promise<Contact>, Fragmentable {
   phoneNumber: () => Promise<String>;
   jobTitle: () => Promise<String>;
   user: <T = UserPromise>() => T;
+  company: <T = CompanyPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ContactSubscription
@@ -655,6 +1053,9 @@ export interface ContactSubscription
   phoneNumber: () => Promise<AsyncIterator<String>>;
   jobTitle: () => Promise<AsyncIterator<String>>;
   user: <T = UserSubscription>() => T;
+  company: <T = CompanySubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface ContactNullablePromise
@@ -666,6 +1067,9 @@ export interface ContactNullablePromise
   phoneNumber: () => Promise<String>;
   jobTitle: () => Promise<String>;
   user: <T = UserPromise>() => T;
+  company: <T = CompanyPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface User {
@@ -747,25 +1151,25 @@ export interface UserNullablePromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface ContactConnection {
+export interface CompanyConnection {
   pageInfo: PageInfo;
-  edges: ContactEdge[];
+  edges: CompanyEdge[];
 }
 
-export interface ContactConnectionPromise
-  extends Promise<ContactConnection>,
+export interface CompanyConnectionPromise
+  extends Promise<CompanyConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ContactEdge>>() => T;
-  aggregate: <T = AggregateContactPromise>() => T;
+  edges: <T = FragmentableArray<CompanyEdge>>() => T;
+  aggregate: <T = AggregateCompanyPromise>() => T;
 }
 
-export interface ContactConnectionSubscription
-  extends Promise<AsyncIterator<ContactConnection>>,
+export interface CompanyConnectionSubscription
+  extends Promise<AsyncIterator<CompanyConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ContactEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateContactSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CompanyEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCompanySubscription>() => T;
 }
 
 export interface PageInfo {
@@ -789,6 +1193,60 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CompanyEdge {
+  node: Company;
+  cursor: String;
+}
+
+export interface CompanyEdgePromise extends Promise<CompanyEdge>, Fragmentable {
+  node: <T = CompanyPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CompanyEdgeSubscription
+  extends Promise<AsyncIterator<CompanyEdge>>,
+    Fragmentable {
+  node: <T = CompanySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateCompany {
+  count: Int;
+}
+
+export interface AggregateCompanyPromise
+  extends Promise<AggregateCompany>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCompanySubscription
+  extends Promise<AsyncIterator<AggregateCompany>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ContactConnection {
+  pageInfo: PageInfo;
+  edges: ContactEdge[];
+}
+
+export interface ContactConnectionPromise
+  extends Promise<ContactConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ContactEdge>>() => T;
+  aggregate: <T = AggregateContactPromise>() => T;
+}
+
+export interface ContactConnectionSubscription
+  extends Promise<AsyncIterator<ContactConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ContactEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateContactSubscription>() => T;
 }
 
 export interface ContactEdge {
@@ -894,6 +1352,65 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface CompanySubscriptionPayload {
+  mutation: MutationType;
+  node: Company;
+  updatedFields: String[];
+  previousValues: CompanyPreviousValues;
+}
+
+export interface CompanySubscriptionPayloadPromise
+  extends Promise<CompanySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CompanyPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CompanyPreviousValuesPromise>() => T;
+}
+
+export interface CompanySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CompanySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CompanySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CompanyPreviousValuesSubscription>() => T;
+}
+
+export interface CompanyPreviousValues {
+  id: ID_Output;
+  name: String;
+  address?: String;
+  phone?: String;
+  website?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface CompanyPreviousValuesPromise
+  extends Promise<CompanyPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  address: () => Promise<String>;
+  phone: () => Promise<String>;
+  website: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CompanyPreviousValuesSubscription
+  extends Promise<AsyncIterator<CompanyPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  website: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface ContactSubscriptionPayload {
   mutation: MutationType;
   node: Contact;
@@ -925,6 +1442,8 @@ export interface ContactPreviousValues {
   email?: String;
   phoneNumber?: String;
   jobTitle?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface ContactPreviousValuesPromise
@@ -935,6 +1454,8 @@ export interface ContactPreviousValuesPromise
   email: () => Promise<String>;
   phoneNumber: () => Promise<String>;
   jobTitle: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ContactPreviousValuesSubscription
@@ -945,6 +1466,8 @@ export interface ContactPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   phoneNumber: () => Promise<AsyncIterator<String>>;
   jobTitle: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1060,6 +1583,10 @@ export const models: Model[] = [
   },
   {
     name: "Contact",
+    embedded: false
+  },
+  {
+    name: "Company",
     embedded: false
   }
 ];
