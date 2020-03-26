@@ -5,9 +5,9 @@ const userType = gql`
     id: ID!
     name: String!
     email: String!
-    Bio: String
-    Age: Int
-    Gender: GenderOptions
+    bio: String
+    age: Int
+    gender: GenderOptions
   }
 
   enum GenderOptions {
