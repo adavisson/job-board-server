@@ -23,7 +23,7 @@ type Company {
   id: ID!
   name: String!
   address: String
-  phone: String
+  phoneNumber: String
   website: String
   employees(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact!]
   createdAt: DateTime!
@@ -40,7 +40,7 @@ input CompanyCreateInput {
   id: ID
   name: String!
   address: String
-  phone: String
+  phoneNumber: String
   website: String
   employees: ContactCreateManyWithoutCompanyInput
 }
@@ -54,7 +54,7 @@ input CompanyCreateWithoutEmployeesInput {
   id: ID
   name: String!
   address: String
-  phone: String
+  phoneNumber: String
   website: String
 }
 
@@ -70,8 +70,8 @@ enum CompanyOrderByInput {
   name_DESC
   address_ASC
   address_DESC
-  phone_ASC
-  phone_DESC
+  phoneNumber_ASC
+  phoneNumber_DESC
   website_ASC
   website_DESC
   createdAt_ASC
@@ -84,7 +84,7 @@ type CompanyPreviousValues {
   id: ID!
   name: String!
   address: String
-  phone: String
+  phoneNumber: String
   website: String
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -111,7 +111,7 @@ input CompanySubscriptionWhereInput {
 input CompanyUpdateInput {
   name: String
   address: String
-  phone: String
+  phoneNumber: String
   website: String
   employees: ContactUpdateManyWithoutCompanyInput
 }
@@ -119,7 +119,7 @@ input CompanyUpdateInput {
 input CompanyUpdateManyMutationInput {
   name: String
   address: String
-  phone: String
+  phoneNumber: String
   website: String
 }
 
@@ -135,7 +135,7 @@ input CompanyUpdateOneWithoutEmployeesInput {
 input CompanyUpdateWithoutEmployeesDataInput {
   name: String
   address: String
-  phone: String
+  phoneNumber: String
   website: String
 }
 
@@ -187,20 +187,20 @@ input CompanyWhereInput {
   address_not_starts_with: String
   address_ends_with: String
   address_not_ends_with: String
-  phone: String
-  phone_not: String
-  phone_in: [String!]
-  phone_not_in: [String!]
-  phone_lt: String
-  phone_lte: String
-  phone_gt: String
-  phone_gte: String
-  phone_contains: String
-  phone_not_contains: String
-  phone_starts_with: String
-  phone_not_starts_with: String
-  phone_ends_with: String
-  phone_not_ends_with: String
+  phoneNumber: String
+  phoneNumber_not: String
+  phoneNumber_in: [String!]
+  phoneNumber_not_in: [String!]
+  phoneNumber_lt: String
+  phoneNumber_lte: String
+  phoneNumber_gt: String
+  phoneNumber_gte: String
+  phoneNumber_contains: String
+  phoneNumber_not_contains: String
+  phoneNumber_starts_with: String
+  phoneNumber_not_starts_with: String
+  phoneNumber_ends_with: String
+  phoneNumber_not_ends_with: String
   website: String
   website_not: String
   website_in: [String!]

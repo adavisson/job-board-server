@@ -204,8 +204,8 @@ export type CompanyOrderByInput =
   | "name_DESC"
   | "address_ASC"
   | "address_DESC"
-  | "phone_ASC"
-  | "phone_DESC"
+  | "phoneNumber_ASC"
+  | "phoneNumber_DESC"
   | "website_ASC"
   | "website_DESC"
   | "createdAt_ASC"
@@ -483,20 +483,20 @@ export interface CompanyWhereInput {
   address_not_starts_with?: Maybe<String>;
   address_ends_with?: Maybe<String>;
   address_not_ends_with?: Maybe<String>;
-  phone?: Maybe<String>;
-  phone_not?: Maybe<String>;
-  phone_in?: Maybe<String[] | String>;
-  phone_not_in?: Maybe<String[] | String>;
-  phone_lt?: Maybe<String>;
-  phone_lte?: Maybe<String>;
-  phone_gt?: Maybe<String>;
-  phone_gte?: Maybe<String>;
-  phone_contains?: Maybe<String>;
-  phone_not_contains?: Maybe<String>;
-  phone_starts_with?: Maybe<String>;
-  phone_not_starts_with?: Maybe<String>;
-  phone_ends_with?: Maybe<String>;
-  phone_not_ends_with?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  phoneNumber_not?: Maybe<String>;
+  phoneNumber_in?: Maybe<String[] | String>;
+  phoneNumber_not_in?: Maybe<String[] | String>;
+  phoneNumber_lt?: Maybe<String>;
+  phoneNumber_lte?: Maybe<String>;
+  phoneNumber_gt?: Maybe<String>;
+  phoneNumber_gte?: Maybe<String>;
+  phoneNumber_contains?: Maybe<String>;
+  phoneNumber_not_contains?: Maybe<String>;
+  phoneNumber_starts_with?: Maybe<String>;
+  phoneNumber_not_starts_with?: Maybe<String>;
+  phoneNumber_ends_with?: Maybe<String>;
+  phoneNumber_not_ends_with?: Maybe<String>;
   website?: Maybe<String>;
   website_not?: Maybe<String>;
   website_in?: Maybe<String[] | String>;
@@ -548,7 +548,7 @@ export interface CompanyCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   address?: Maybe<String>;
-  phone?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
   website?: Maybe<String>;
   employees?: Maybe<ContactCreateManyWithoutCompanyInput>;
 }
@@ -587,7 +587,7 @@ export interface UserCreateWithoutContactsInput {
 export interface CompanyUpdateInput {
   name?: Maybe<String>;
   address?: Maybe<String>;
-  phone?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
   website?: Maybe<String>;
   employees?: Maybe<ContactUpdateManyWithoutCompanyInput>;
 }
@@ -762,7 +762,7 @@ export interface ContactUpdateManyDataInput {
 export interface CompanyUpdateManyMutationInput {
   name?: Maybe<String>;
   address?: Maybe<String>;
-  phone?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
   website?: Maybe<String>;
 }
 
@@ -785,7 +785,7 @@ export interface CompanyCreateWithoutEmployeesInput {
   id?: Maybe<ID_Input>;
   name: String;
   address?: Maybe<String>;
-  phone?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
   website?: Maybe<String>;
 }
 
@@ -810,7 +810,7 @@ export interface CompanyUpdateOneWithoutEmployeesInput {
 export interface CompanyUpdateWithoutEmployeesDataInput {
   name?: Maybe<String>;
   address?: Maybe<String>;
-  phone?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
   website?: Maybe<String>;
 }
 
@@ -955,7 +955,7 @@ export interface Company {
   id: ID_Output;
   name: String;
   address?: String;
-  phone?: String;
+  phoneNumber?: String;
   website?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -965,7 +965,7 @@ export interface CompanyPromise extends Promise<Company>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   address: () => Promise<String>;
-  phone: () => Promise<String>;
+  phoneNumber: () => Promise<String>;
   website: () => Promise<String>;
   employees: <T = FragmentableArray<Contact>>(args?: {
     where?: ContactWhereInput;
@@ -986,7 +986,7 @@ export interface CompanySubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
-  phone: () => Promise<AsyncIterator<String>>;
+  phoneNumber: () => Promise<AsyncIterator<String>>;
   website: () => Promise<AsyncIterator<String>>;
   employees: <T = Promise<AsyncIterator<ContactSubscription>>>(args?: {
     where?: ContactWhereInput;
@@ -1007,7 +1007,7 @@ export interface CompanyNullablePromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   address: () => Promise<String>;
-  phone: () => Promise<String>;
+  phoneNumber: () => Promise<String>;
   website: () => Promise<String>;
   employees: <T = FragmentableArray<Contact>>(args?: {
     where?: ContactWhereInput;
@@ -1381,7 +1381,7 @@ export interface CompanyPreviousValues {
   id: ID_Output;
   name: String;
   address?: String;
-  phone?: String;
+  phoneNumber?: String;
   website?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -1393,7 +1393,7 @@ export interface CompanyPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   address: () => Promise<String>;
-  phone: () => Promise<String>;
+  phoneNumber: () => Promise<String>;
   website: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -1405,7 +1405,7 @@ export interface CompanyPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
-  phone: () => Promise<AsyncIterator<String>>;
+  phoneNumber: () => Promise<AsyncIterator<String>>;
   website: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
