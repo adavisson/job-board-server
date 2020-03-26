@@ -16,3 +16,12 @@ enum GenderOptions {
   FEMALE
   OTHER
 }
+
+type Contact {
+  id: ID! @id
+  name: String!
+  email: String
+  phoneNumber: String
+  jobTitle: String
+  user: User
+}
