@@ -25,6 +25,18 @@ type Contact {
   phoneNumber: String
   jobTitle: String
   user: User!
+  company: Company
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Company {
+  id: ID! @id
+  name: String!
+  address: String
+  phone: String
+  website: String
+  employees: [Contact!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
