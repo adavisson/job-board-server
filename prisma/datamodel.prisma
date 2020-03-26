@@ -4,9 +4,9 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  Bio: String
-  Age: Int
-  Gender: GenderOptions
+  bio: String
+  age: Int
+  gender: GenderOptions
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
