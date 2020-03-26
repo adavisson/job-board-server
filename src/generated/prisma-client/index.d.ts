@@ -340,6 +340,9 @@ export interface UserWhereInput {
   gender_not?: Maybe<GenderOptions>;
   gender_in?: Maybe<GenderOptions[] | GenderOptions>;
   gender_not_in?: Maybe<GenderOptions[] | GenderOptions>;
+  contacts_every?: Maybe<ContactWhereInput>;
+  contacts_some?: Maybe<ContactWhereInput>;
+  contacts_none?: Maybe<ContactWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -372,15 +375,15 @@ export interface ContactCreateInput {
   email?: Maybe<String>;
   phoneNumber?: Maybe<String>;
   jobTitle?: Maybe<String>;
-  user?: Maybe<UserCreateOneInput>;
+  user: UserCreateOneWithoutContactsInput;
 }
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
+export interface UserCreateOneWithoutContactsInput {
+  create?: Maybe<UserCreateWithoutContactsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateInput {
+export interface UserCreateWithoutContactsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
@@ -395,19 +398,17 @@ export interface ContactUpdateInput {
   email?: Maybe<String>;
   phoneNumber?: Maybe<String>;
   jobTitle?: Maybe<String>;
-  user?: Maybe<UserUpdateOneInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutContactsInput>;
 }
 
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
+export interface UserUpdateOneRequiredWithoutContactsInput {
+  create?: Maybe<UserCreateWithoutContactsInput>;
+  update?: Maybe<UserUpdateWithoutContactsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutContactsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateDataInput {
+export interface UserUpdateWithoutContactsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
@@ -416,13 +417,39 @@ export interface UserUpdateDataInput {
   gender?: Maybe<GenderOptions>;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface UserUpsertWithoutContactsInput {
+  update: UserUpdateWithoutContactsDataInput;
+  create: UserCreateWithoutContactsInput;
 }
 
 export interface ContactUpdateManyMutationInput {
   name?: Maybe<String>;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  bio?: Maybe<String>;
+  age?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
+  contacts?: Maybe<ContactCreateManyWithoutUserInput>;
+}
+
+export interface ContactCreateManyWithoutUserInput {
+  create?: Maybe<
+    ContactCreateWithoutUserInput[] | ContactCreateWithoutUserInput
+  >;
+  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+}
+
+export interface ContactCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
   email?: Maybe<String>;
   phoneNumber?: Maybe<String>;
   jobTitle?: Maybe<String>;
@@ -435,6 +462,136 @@ export interface UserUpdateInput {
   bio?: Maybe<String>;
   age?: Maybe<Int>;
   gender?: Maybe<GenderOptions>;
+  contacts?: Maybe<ContactUpdateManyWithoutUserInput>;
+}
+
+export interface ContactUpdateManyWithoutUserInput {
+  create?: Maybe<
+    ContactCreateWithoutUserInput[] | ContactCreateWithoutUserInput
+  >;
+  delete?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  connect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  set?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  disconnect?: Maybe<ContactWhereUniqueInput[] | ContactWhereUniqueInput>;
+  update?: Maybe<
+    | ContactUpdateWithWhereUniqueWithoutUserInput[]
+    | ContactUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | ContactUpsertWithWhereUniqueWithoutUserInput[]
+    | ContactUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
+  updateMany?: Maybe<
+    | ContactUpdateManyWithWhereNestedInput[]
+    | ContactUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ContactUpdateWithWhereUniqueWithoutUserInput {
+  where: ContactWhereUniqueInput;
+  data: ContactUpdateWithoutUserDataInput;
+}
+
+export interface ContactUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+}
+
+export interface ContactUpsertWithWhereUniqueWithoutUserInput {
+  where: ContactWhereUniqueInput;
+  update: ContactUpdateWithoutUserDataInput;
+  create: ContactCreateWithoutUserInput;
+}
+
+export interface ContactScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  phoneNumber_not?: Maybe<String>;
+  phoneNumber_in?: Maybe<String[] | String>;
+  phoneNumber_not_in?: Maybe<String[] | String>;
+  phoneNumber_lt?: Maybe<String>;
+  phoneNumber_lte?: Maybe<String>;
+  phoneNumber_gt?: Maybe<String>;
+  phoneNumber_gte?: Maybe<String>;
+  phoneNumber_contains?: Maybe<String>;
+  phoneNumber_not_contains?: Maybe<String>;
+  phoneNumber_starts_with?: Maybe<String>;
+  phoneNumber_not_starts_with?: Maybe<String>;
+  phoneNumber_ends_with?: Maybe<String>;
+  phoneNumber_not_ends_with?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+  jobTitle_not?: Maybe<String>;
+  jobTitle_in?: Maybe<String[] | String>;
+  jobTitle_not_in?: Maybe<String[] | String>;
+  jobTitle_lt?: Maybe<String>;
+  jobTitle_lte?: Maybe<String>;
+  jobTitle_gt?: Maybe<String>;
+  jobTitle_gte?: Maybe<String>;
+  jobTitle_contains?: Maybe<String>;
+  jobTitle_not_contains?: Maybe<String>;
+  jobTitle_starts_with?: Maybe<String>;
+  jobTitle_not_starts_with?: Maybe<String>;
+  jobTitle_ends_with?: Maybe<String>;
+  jobTitle_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
+  OR?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
+  NOT?: Maybe<ContactScalarWhereInput[] | ContactScalarWhereInput>;
+}
+
+export interface ContactUpdateManyWithWhereNestedInput {
+  where: ContactScalarWhereInput;
+  data: ContactUpdateManyDataInput;
+}
+
+export interface ContactUpdateManyDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -531,6 +688,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   bio: () => Promise<String>;
   age: () => Promise<Int>;
   gender: () => Promise<GenderOptions>;
+  contacts: <T = FragmentableArray<Contact>>(args?: {
+    where?: ContactWhereInput;
+    orderBy?: ContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -545,6 +711,15 @@ export interface UserSubscription
   bio: () => Promise<AsyncIterator<String>>;
   age: () => Promise<AsyncIterator<Int>>;
   gender: () => Promise<AsyncIterator<GenderOptions>>;
+  contacts: <T = Promise<AsyncIterator<ContactSubscription>>>(args?: {
+    where?: ContactWhereInput;
+    orderBy?: ContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -559,6 +734,15 @@ export interface UserNullablePromise
   bio: () => Promise<String>;
   age: () => Promise<Int>;
   gender: () => Promise<GenderOptions>;
+  contacts: <T = FragmentableArray<Contact>>(args?: {
+    where?: ContactWhereInput;
+    orderBy?: ContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }

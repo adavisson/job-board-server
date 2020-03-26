@@ -21,7 +21,7 @@ type Contact {
   email: String
   phoneNumber: String
   jobTitle: String
-  user: User
+  user: User!
 }
 
 type ContactConnection {
@@ -36,7 +36,20 @@ input ContactCreateInput {
   email: String
   phoneNumber: String
   jobTitle: String
-  user: UserCreateOneInput
+  user: UserCreateOneWithoutContactsInput!
+}
+
+input ContactCreateManyWithoutUserInput {
+  create: [ContactCreateWithoutUserInput!]
+  connect: [ContactWhereUniqueInput!]
+}
+
+input ContactCreateWithoutUserInput {
+  id: ID
+  name: String!
+  email: String
+  phoneNumber: String
+  jobTitle: String
 }
 
 type ContactEdge {
@@ -65,6 +78,82 @@ type ContactPreviousValues {
   jobTitle: String
 }
 
+input ContactScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phoneNumber: String
+  phoneNumber_not: String
+  phoneNumber_in: [String!]
+  phoneNumber_not_in: [String!]
+  phoneNumber_lt: String
+  phoneNumber_lte: String
+  phoneNumber_gt: String
+  phoneNumber_gte: String
+  phoneNumber_contains: String
+  phoneNumber_not_contains: String
+  phoneNumber_starts_with: String
+  phoneNumber_not_starts_with: String
+  phoneNumber_ends_with: String
+  phoneNumber_not_ends_with: String
+  jobTitle: String
+  jobTitle_not: String
+  jobTitle_in: [String!]
+  jobTitle_not_in: [String!]
+  jobTitle_lt: String
+  jobTitle_lte: String
+  jobTitle_gt: String
+  jobTitle_gte: String
+  jobTitle_contains: String
+  jobTitle_not_contains: String
+  jobTitle_starts_with: String
+  jobTitle_not_starts_with: String
+  jobTitle_ends_with: String
+  jobTitle_not_ends_with: String
+  AND: [ContactScalarWhereInput!]
+  OR: [ContactScalarWhereInput!]
+  NOT: [ContactScalarWhereInput!]
+}
+
 type ContactSubscriptionPayload {
   mutation: MutationType!
   node: Contact
@@ -88,7 +177,14 @@ input ContactUpdateInput {
   email: String
   phoneNumber: String
   jobTitle: String
-  user: UserUpdateOneInput
+  user: UserUpdateOneRequiredWithoutContactsInput
+}
+
+input ContactUpdateManyDataInput {
+  name: String
+  email: String
+  phoneNumber: String
+  jobTitle: String
 }
 
 input ContactUpdateManyMutationInput {
@@ -96,6 +192,41 @@ input ContactUpdateManyMutationInput {
   email: String
   phoneNumber: String
   jobTitle: String
+}
+
+input ContactUpdateManyWithoutUserInput {
+  create: [ContactCreateWithoutUserInput!]
+  delete: [ContactWhereUniqueInput!]
+  connect: [ContactWhereUniqueInput!]
+  set: [ContactWhereUniqueInput!]
+  disconnect: [ContactWhereUniqueInput!]
+  update: [ContactUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ContactUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ContactScalarWhereInput!]
+  updateMany: [ContactUpdateManyWithWhereNestedInput!]
+}
+
+input ContactUpdateManyWithWhereNestedInput {
+  where: ContactScalarWhereInput!
+  data: ContactUpdateManyDataInput!
+}
+
+input ContactUpdateWithoutUserDataInput {
+  name: String
+  email: String
+  phoneNumber: String
+  jobTitle: String
+}
+
+input ContactUpdateWithWhereUniqueWithoutUserInput {
+  where: ContactWhereUniqueInput!
+  data: ContactUpdateWithoutUserDataInput!
+}
+
+input ContactUpsertWithWhereUniqueWithoutUserInput {
+  where: ContactWhereUniqueInput!
+  update: ContactUpdateWithoutUserDataInput!
+  create: ContactCreateWithoutUserInput!
 }
 
 input ContactWhereInput {
@@ -244,6 +375,7 @@ type User {
   bio: String
   age: Int
   gender: GenderOptions
+  contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -262,11 +394,22 @@ input UserCreateInput {
   bio: String
   age: Int
   gender: GenderOptions
+  contacts: ContactCreateManyWithoutUserInput
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutContactsInput {
+  create: UserCreateWithoutContactsInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutContactsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  bio: String
+  age: Int
+  gender: GenderOptions
 }
 
 type UserEdge {
@@ -325,15 +468,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  name: String
-  email: String
-  password: String
-  bio: String
-  age: Int
-  gender: GenderOptions
-}
-
 input UserUpdateInput {
   name: String
   email: String
@@ -341,6 +475,7 @@ input UserUpdateInput {
   bio: String
   age: Int
   gender: GenderOptions
+  contacts: ContactUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -352,18 +487,25 @@ input UserUpdateManyMutationInput {
   gender: GenderOptions
 }
 
-input UserUpdateOneInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
+input UserUpdateOneRequiredWithoutContactsInput {
+  create: UserCreateWithoutContactsInput
+  update: UserUpdateWithoutContactsDataInput
+  upsert: UserUpsertWithoutContactsInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutContactsDataInput {
+  name: String
+  email: String
+  password: String
+  bio: String
+  age: Int
+  gender: GenderOptions
+}
+
+input UserUpsertWithoutContactsInput {
+  update: UserUpdateWithoutContactsDataInput!
+  create: UserCreateWithoutContactsInput!
 }
 
 input UserWhereInput {
@@ -449,6 +591,9 @@ input UserWhereInput {
   gender_not: GenderOptions
   gender_in: [GenderOptions!]
   gender_not_in: [GenderOptions!]
+  contacts_every: ContactWhereInput
+  contacts_some: ContactWhereInput
+  contacts_none: ContactWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
