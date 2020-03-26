@@ -7,6 +7,7 @@ type User {
   bio: String
   age: Int
   gender: GenderOptions
+  contacts: [Contact!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
