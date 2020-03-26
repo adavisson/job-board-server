@@ -1,6 +1,7 @@
 const { helloResolver } = require('./helloResolver');
+const { userResolvers } = require('./userResolvers');
 
-const resolvers = [helloResolver];
+const resolvers = [helloResolver, userResolvers];
 
 module.exports = {
   resolvers,
