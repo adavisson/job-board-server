@@ -4,9 +4,9 @@ const companyResolvers = {
   Query: {
     employees: (parent, args, context, info) => {
       const userId = getUserId(context)
-      const company = context.prisma.company({ id: args.companyId });
-      const where = { company: company }
-      const contacts = context.prisma.user({ id: userId }).contacts(where)
+      const user = context.prisma.user({ id: userId });
+      const where = { user: user }
+      const contacts = context.prisma.company({ id: args.companyId }).employees(where)
       return contacts
     }
   },
