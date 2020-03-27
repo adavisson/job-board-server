@@ -9,6 +9,9 @@ const query = gql`
     jobPostings: [JobPosting!]!
     applications: [Application!]!
     userNotes: [Note!]!
+    companyNotes(companyId: ID!): [Note!]!
+    contactNotes: [Note!]!
+    applicationNotes: [Note!]!
   }
 `
 

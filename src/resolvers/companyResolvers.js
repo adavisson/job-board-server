@@ -17,6 +17,14 @@ const companyResolvers = {
         where
       });
       return contacts
+    },
+    companyNotes: (parent, args, context, info) => {
+      const userId = getUserId(context)
+      const where = {
+        user: {id: userId}
+      }
+      const notes = context.prisma.company({id: args.companyId}).notes({where})
+      return notes
     }
   },
   Mutation: {
