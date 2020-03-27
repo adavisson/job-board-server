@@ -1383,7 +1383,7 @@ type NoteConnection {
 input NoteCreateInput {
   id: ID
   body: String!
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutNotesInput!
   company: CompanyCreateOneWithoutNotesInput
   application: ApplicationCreateOneWithoutNotesInput
   contact: ContactCreateOneWithoutNotesInput
@@ -1404,10 +1404,15 @@ input NoteCreateManyWithoutContactInput {
   connect: [NoteWhereUniqueInput!]
 }
 
+input NoteCreateManyWithoutUserInput {
+  create: [NoteCreateWithoutUserInput!]
+  connect: [NoteWhereUniqueInput!]
+}
+
 input NoteCreateWithoutApplicationInput {
   id: ID
   body: String!
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutNotesInput!
   company: CompanyCreateOneWithoutNotesInput
   contact: ContactCreateOneWithoutNotesInput
 }
@@ -1415,7 +1420,7 @@ input NoteCreateWithoutApplicationInput {
 input NoteCreateWithoutCompanyInput {
   id: ID
   body: String!
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutNotesInput!
   application: ApplicationCreateOneWithoutNotesInput
   contact: ContactCreateOneWithoutNotesInput
 }
@@ -1423,9 +1428,17 @@ input NoteCreateWithoutCompanyInput {
 input NoteCreateWithoutContactInput {
   id: ID
   body: String!
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutNotesInput!
   company: CompanyCreateOneWithoutNotesInput
   application: ApplicationCreateOneWithoutNotesInput
+}
+
+input NoteCreateWithoutUserInput {
+  id: ID
+  body: String!
+  company: CompanyCreateOneWithoutNotesInput
+  application: ApplicationCreateOneWithoutNotesInput
+  contact: ContactCreateOneWithoutNotesInput
 }
 
 type NoteEdge {
@@ -1521,7 +1534,7 @@ input NoteSubscriptionWhereInput {
 
 input NoteUpdateInput {
   body: String
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutNotesInput
   company: CompanyUpdateOneWithoutNotesInput
   application: ApplicationUpdateOneWithoutNotesInput
   contact: ContactUpdateOneWithoutNotesInput
@@ -1571,6 +1584,18 @@ input NoteUpdateManyWithoutContactInput {
   updateMany: [NoteUpdateManyWithWhereNestedInput!]
 }
 
+input NoteUpdateManyWithoutUserInput {
+  create: [NoteCreateWithoutUserInput!]
+  delete: [NoteWhereUniqueInput!]
+  connect: [NoteWhereUniqueInput!]
+  set: [NoteWhereUniqueInput!]
+  disconnect: [NoteWhereUniqueInput!]
+  update: [NoteUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [NoteUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [NoteScalarWhereInput!]
+  updateMany: [NoteUpdateManyWithWhereNestedInput!]
+}
+
 input NoteUpdateManyWithWhereNestedInput {
   where: NoteScalarWhereInput!
   data: NoteUpdateManyDataInput!
@@ -1578,23 +1603,30 @@ input NoteUpdateManyWithWhereNestedInput {
 
 input NoteUpdateWithoutApplicationDataInput {
   body: String
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutNotesInput
   company: CompanyUpdateOneWithoutNotesInput
   contact: ContactUpdateOneWithoutNotesInput
 }
 
 input NoteUpdateWithoutCompanyDataInput {
   body: String
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutNotesInput
   application: ApplicationUpdateOneWithoutNotesInput
   contact: ContactUpdateOneWithoutNotesInput
 }
 
 input NoteUpdateWithoutContactDataInput {
   body: String
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutNotesInput
   company: CompanyUpdateOneWithoutNotesInput
   application: ApplicationUpdateOneWithoutNotesInput
+}
+
+input NoteUpdateWithoutUserDataInput {
+  body: String
+  company: CompanyUpdateOneWithoutNotesInput
+  application: ApplicationUpdateOneWithoutNotesInput
+  contact: ContactUpdateOneWithoutNotesInput
 }
 
 input NoteUpdateWithWhereUniqueWithoutApplicationInput {
@@ -1610,6 +1642,11 @@ input NoteUpdateWithWhereUniqueWithoutCompanyInput {
 input NoteUpdateWithWhereUniqueWithoutContactInput {
   where: NoteWhereUniqueInput!
   data: NoteUpdateWithoutContactDataInput!
+}
+
+input NoteUpdateWithWhereUniqueWithoutUserInput {
+  where: NoteWhereUniqueInput!
+  data: NoteUpdateWithoutUserDataInput!
 }
 
 input NoteUpsertWithWhereUniqueWithoutApplicationInput {
@@ -1628,6 +1665,12 @@ input NoteUpsertWithWhereUniqueWithoutContactInput {
   where: NoteWhereUniqueInput!
   update: NoteUpdateWithoutContactDataInput!
   create: NoteCreateWithoutContactInput!
+}
+
+input NoteUpsertWithWhereUniqueWithoutUserInput {
+  where: NoteWhereUniqueInput!
+  update: NoteUpdateWithoutUserDataInput!
+  create: NoteCreateWithoutUserInput!
 }
 
 input NoteWhereInput {
@@ -1735,6 +1778,7 @@ type User {
   age: Int
   gender: GenderOptions
   contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact!]
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1755,12 +1799,8 @@ input UserCreateInput {
   age: Int
   gender: GenderOptions
   contacts: ContactCreateManyWithoutUserInput
+  notes: NoteCreateManyWithoutUserInput
   applications: ApplicationCreateManyWithoutUserInput
-}
-
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutApplicationsInput {
@@ -1773,6 +1813,11 @@ input UserCreateOneWithoutContactsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutNotesInput {
+  create: UserCreateWithoutNotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutApplicationsInput {
   id: ID
   name: String!
@@ -1782,6 +1827,7 @@ input UserCreateWithoutApplicationsInput {
   age: Int
   gender: GenderOptions
   contacts: ContactCreateManyWithoutUserInput
+  notes: NoteCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutContactsInput {
@@ -1792,6 +1838,19 @@ input UserCreateWithoutContactsInput {
   bio: String
   age: Int
   gender: GenderOptions
+  notes: NoteCreateManyWithoutUserInput
+  applications: ApplicationCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutNotesInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  bio: String
+  age: Int
+  gender: GenderOptions
+  contacts: ContactCreateManyWithoutUserInput
   applications: ApplicationCreateManyWithoutUserInput
 }
 
@@ -1851,17 +1910,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  name: String
-  email: String
-  password: String
-  bio: String
-  age: Int
-  gender: GenderOptions
-  contacts: ContactUpdateManyWithoutUserInput
-  applications: ApplicationUpdateManyWithoutUserInput
-}
-
 input UserUpdateInput {
   name: String
   email: String
@@ -1870,6 +1918,7 @@ input UserUpdateInput {
   age: Int
   gender: GenderOptions
   contacts: ContactUpdateManyWithoutUserInput
+  notes: NoteUpdateManyWithoutUserInput
   applications: ApplicationUpdateManyWithoutUserInput
 }
 
@@ -1880,13 +1929,6 @@ input UserUpdateManyMutationInput {
   bio: String
   age: Int
   gender: GenderOptions
-}
-
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
-  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutApplicationsInput {
@@ -1903,6 +1945,13 @@ input UserUpdateOneRequiredWithoutContactsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutNotesInput {
+  create: UserCreateWithoutNotesInput
+  update: UserUpdateWithoutNotesDataInput
+  upsert: UserUpsertWithoutNotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutApplicationsDataInput {
   name: String
   email: String
@@ -1911,6 +1960,7 @@ input UserUpdateWithoutApplicationsDataInput {
   age: Int
   gender: GenderOptions
   contacts: ContactUpdateManyWithoutUserInput
+  notes: NoteUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutContactsDataInput {
@@ -1920,12 +1970,19 @@ input UserUpdateWithoutContactsDataInput {
   bio: String
   age: Int
   gender: GenderOptions
+  notes: NoteUpdateManyWithoutUserInput
   applications: ApplicationUpdateManyWithoutUserInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutNotesDataInput {
+  name: String
+  email: String
+  password: String
+  bio: String
+  age: Int
+  gender: GenderOptions
+  contacts: ContactUpdateManyWithoutUserInput
+  applications: ApplicationUpdateManyWithoutUserInput
 }
 
 input UserUpsertWithoutApplicationsInput {
@@ -1936,6 +1993,11 @@ input UserUpsertWithoutApplicationsInput {
 input UserUpsertWithoutContactsInput {
   update: UserUpdateWithoutContactsDataInput!
   create: UserCreateWithoutContactsInput!
+}
+
+input UserUpsertWithoutNotesInput {
+  update: UserUpdateWithoutNotesDataInput!
+  create: UserCreateWithoutNotesInput!
 }
 
 input UserWhereInput {
@@ -2024,6 +2086,9 @@ input UserWhereInput {
   contacts_every: ContactWhereInput
   contacts_some: ContactWhereInput
   contacts_none: ContactWhereInput
+  notes_every: NoteWhereInput
+  notes_some: NoteWhereInput
+  notes_none: NoteWhereInput
   applications_every: ApplicationWhereInput
   applications_some: ApplicationWhereInput
   applications_none: ApplicationWhereInput

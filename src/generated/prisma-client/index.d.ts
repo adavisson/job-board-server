@@ -575,6 +575,9 @@ export interface UserWhereInput {
   contacts_every?: Maybe<ContactWhereInput>;
   contacts_some?: Maybe<ContactWhereInput>;
   contacts_none?: Maybe<ContactWhereInput>;
+  notes_every?: Maybe<NoteWhereInput>;
+  notes_some?: Maybe<NoteWhereInput>;
+  notes_none?: Maybe<NoteWhereInput>;
   applications_every?: Maybe<ApplicationWhereInput>;
   applications_some?: Maybe<ApplicationWhereInput>;
   applications_none?: Maybe<ApplicationWhereInput>;
@@ -599,7 +602,7 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface ApplicationWhereInput {
+export interface NoteWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -614,78 +617,24 @@ export interface ApplicationWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  applied?: Maybe<Boolean>;
-  applied_not?: Maybe<Boolean>;
+  body?: Maybe<String>;
+  body_not?: Maybe<String>;
+  body_in?: Maybe<String[] | String>;
+  body_not_in?: Maybe<String[] | String>;
+  body_lt?: Maybe<String>;
+  body_lte?: Maybe<String>;
+  body_gt?: Maybe<String>;
+  body_gte?: Maybe<String>;
+  body_contains?: Maybe<String>;
+  body_not_contains?: Maybe<String>;
+  body_starts_with?: Maybe<String>;
+  body_not_starts_with?: Maybe<String>;
+  body_ends_with?: Maybe<String>;
+  body_not_ends_with?: Maybe<String>;
   user?: Maybe<UserWhereInput>;
-  jobPosting?: Maybe<JobPostingWhereInput>;
-  notes_every?: Maybe<NoteWhereInput>;
-  notes_some?: Maybe<NoteWhereInput>;
-  notes_none?: Maybe<NoteWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ApplicationWhereInput[] | ApplicationWhereInput>;
-  OR?: Maybe<ApplicationWhereInput[] | ApplicationWhereInput>;
-  NOT?: Maybe<ApplicationWhereInput[] | ApplicationWhereInput>;
-}
-
-export interface JobPostingWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
   company?: Maybe<CompanyWhereInput>;
-  link?: Maybe<String>;
-  link_not?: Maybe<String>;
-  link_in?: Maybe<String[] | String>;
-  link_not_in?: Maybe<String[] | String>;
-  link_lt?: Maybe<String>;
-  link_lte?: Maybe<String>;
-  link_gt?: Maybe<String>;
-  link_gte?: Maybe<String>;
-  link_contains?: Maybe<String>;
-  link_not_contains?: Maybe<String>;
-  link_starts_with?: Maybe<String>;
-  link_not_starts_with?: Maybe<String>;
-  link_ends_with?: Maybe<String>;
-  link_not_ends_with?: Maybe<String>;
+  application?: Maybe<ApplicationWhereInput>;
+  contact?: Maybe<ContactWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -702,9 +651,9 @@ export interface JobPostingWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<JobPostingWhereInput[] | JobPostingWhereInput>;
-  OR?: Maybe<JobPostingWhereInput[] | JobPostingWhereInput>;
-  NOT?: Maybe<JobPostingWhereInput[] | JobPostingWhereInput>;
+  AND?: Maybe<NoteWhereInput[] | NoteWhereInput>;
+  OR?: Maybe<NoteWhereInput[] | NoteWhereInput>;
+  NOT?: Maybe<NoteWhereInput[] | NoteWhereInput>;
 }
 
 export interface CompanyWhereInput {
@@ -808,7 +757,7 @@ export interface CompanyWhereInput {
   NOT?: Maybe<CompanyWhereInput[] | CompanyWhereInput>;
 }
 
-export interface NoteWhereInput {
+export interface JobPostingWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -823,24 +772,35 @@ export interface NoteWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  body?: Maybe<String>;
-  body_not?: Maybe<String>;
-  body_in?: Maybe<String[] | String>;
-  body_not_in?: Maybe<String[] | String>;
-  body_lt?: Maybe<String>;
-  body_lte?: Maybe<String>;
-  body_gt?: Maybe<String>;
-  body_gte?: Maybe<String>;
-  body_contains?: Maybe<String>;
-  body_not_contains?: Maybe<String>;
-  body_starts_with?: Maybe<String>;
-  body_not_starts_with?: Maybe<String>;
-  body_ends_with?: Maybe<String>;
-  body_not_ends_with?: Maybe<String>;
-  user?: Maybe<UserWhereInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
   company?: Maybe<CompanyWhereInput>;
-  application?: Maybe<ApplicationWhereInput>;
-  contact?: Maybe<ContactWhereInput>;
+  link?: Maybe<String>;
+  link_not?: Maybe<String>;
+  link_in?: Maybe<String[] | String>;
+  link_not_in?: Maybe<String[] | String>;
+  link_lt?: Maybe<String>;
+  link_lte?: Maybe<String>;
+  link_gt?: Maybe<String>;
+  link_gte?: Maybe<String>;
+  link_contains?: Maybe<String>;
+  link_not_contains?: Maybe<String>;
+  link_starts_with?: Maybe<String>;
+  link_not_starts_with?: Maybe<String>;
+  link_ends_with?: Maybe<String>;
+  link_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -857,9 +817,52 @@ export interface NoteWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<NoteWhereInput[] | NoteWhereInput>;
-  OR?: Maybe<NoteWhereInput[] | NoteWhereInput>;
-  NOT?: Maybe<NoteWhereInput[] | NoteWhereInput>;
+  AND?: Maybe<JobPostingWhereInput[] | JobPostingWhereInput>;
+  OR?: Maybe<JobPostingWhereInput[] | JobPostingWhereInput>;
+  NOT?: Maybe<JobPostingWhereInput[] | JobPostingWhereInput>;
+}
+
+export interface ApplicationWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  applied?: Maybe<Boolean>;
+  applied_not?: Maybe<Boolean>;
+  user?: Maybe<UserWhereInput>;
+  jobPosting?: Maybe<JobPostingWhereInput>;
+  notes_every?: Maybe<NoteWhereInput>;
+  notes_some?: Maybe<NoteWhereInput>;
+  notes_none?: Maybe<NoteWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ApplicationWhereInput[] | ApplicationWhereInput>;
+  OR?: Maybe<ApplicationWhereInput[] | ApplicationWhereInput>;
+  NOT?: Maybe<ApplicationWhereInput[] | ApplicationWhereInput>;
 }
 
 export type CompanyWhereUniqueInput = AtLeastOne<{
@@ -905,6 +908,7 @@ export interface UserCreateWithoutApplicationsInput {
   age?: Maybe<Int>;
   gender?: Maybe<GenderOptions>;
   contacts?: Maybe<ContactCreateManyWithoutUserInput>;
+  notes?: Maybe<NoteCreateManyWithoutUserInput>;
 }
 
 export interface ContactCreateManyWithoutUserInput {
@@ -962,17 +966,17 @@ export interface NoteCreateManyWithoutCompanyInput {
 export interface NoteCreateWithoutCompanyInput {
   id?: Maybe<ID_Input>;
   body: String;
-  user: UserCreateOneInput;
+  user: UserCreateOneWithoutNotesInput;
   application?: Maybe<ApplicationCreateOneWithoutNotesInput>;
   contact?: Maybe<ContactCreateOneWithoutNotesInput>;
 }
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
+export interface UserCreateOneWithoutNotesInput {
+  create?: Maybe<UserCreateWithoutNotesInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateInput {
+export interface UserCreateWithoutNotesInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
@@ -1055,22 +1059,21 @@ export interface UserCreateWithoutContactsInput {
   bio?: Maybe<String>;
   age?: Maybe<Int>;
   gender?: Maybe<GenderOptions>;
+  notes?: Maybe<NoteCreateManyWithoutUserInput>;
   applications?: Maybe<ApplicationCreateManyWithoutUserInput>;
 }
 
-export interface NoteCreateManyWithoutContactInput {
-  create?: Maybe<
-    NoteCreateWithoutContactInput[] | NoteCreateWithoutContactInput
-  >;
+export interface NoteCreateManyWithoutUserInput {
+  create?: Maybe<NoteCreateWithoutUserInput[] | NoteCreateWithoutUserInput>;
   connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
 }
 
-export interface NoteCreateWithoutContactInput {
+export interface NoteCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
   body: String;
-  user: UserCreateOneInput;
   company?: Maybe<CompanyCreateOneWithoutNotesInput>;
   application?: Maybe<ApplicationCreateOneWithoutNotesInput>;
+  contact?: Maybe<ContactCreateOneWithoutNotesInput>;
 }
 
 export interface CompanyCreateOneWithoutNotesInput {
@@ -1100,21 +1103,6 @@ export interface ApplicationCreateWithoutNotesInput {
   jobPosting: JobPostingCreateOneInput;
 }
 
-export interface NoteCreateManyWithoutApplicationInput {
-  create?: Maybe<
-    NoteCreateWithoutApplicationInput[] | NoteCreateWithoutApplicationInput
-  >;
-  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
-}
-
-export interface NoteCreateWithoutApplicationInput {
-  id?: Maybe<ID_Input>;
-  body: String;
-  user: UserCreateOneInput;
-  company?: Maybe<CompanyCreateOneWithoutNotesInput>;
-  contact?: Maybe<ContactCreateOneWithoutNotesInput>;
-}
-
 export interface ContactCreateOneWithoutNotesInput {
   create?: Maybe<ContactCreateWithoutNotesInput>;
   connect?: Maybe<ContactWhereUniqueInput>;
@@ -1128,6 +1116,36 @@ export interface ContactCreateWithoutNotesInput {
   jobTitle?: Maybe<String>;
   user: UserCreateOneWithoutContactsInput;
   company?: Maybe<CompanyCreateOneWithoutEmployeesInput>;
+}
+
+export interface NoteCreateManyWithoutContactInput {
+  create?: Maybe<
+    NoteCreateWithoutContactInput[] | NoteCreateWithoutContactInput
+  >;
+  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+}
+
+export interface NoteCreateWithoutContactInput {
+  id?: Maybe<ID_Input>;
+  body: String;
+  user: UserCreateOneWithoutNotesInput;
+  company?: Maybe<CompanyCreateOneWithoutNotesInput>;
+  application?: Maybe<ApplicationCreateOneWithoutNotesInput>;
+}
+
+export interface NoteCreateManyWithoutApplicationInput {
+  create?: Maybe<
+    NoteCreateWithoutApplicationInput[] | NoteCreateWithoutApplicationInput
+  >;
+  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+}
+
+export interface NoteCreateWithoutApplicationInput {
+  id?: Maybe<ID_Input>;
+  body: String;
+  user: UserCreateOneWithoutNotesInput;
+  company?: Maybe<CompanyCreateOneWithoutNotesInput>;
+  contact?: Maybe<ContactCreateOneWithoutNotesInput>;
 }
 
 export interface ApplicationUpdateInput {
@@ -1152,6 +1170,7 @@ export interface UserUpdateWithoutApplicationsDataInput {
   age?: Maybe<Int>;
   gender?: Maybe<GenderOptions>;
   contacts?: Maybe<ContactUpdateManyWithoutUserInput>;
+  notes?: Maybe<NoteUpdateManyWithoutUserInput>;
 }
 
 export interface ContactUpdateManyWithoutUserInput {
@@ -1351,19 +1370,19 @@ export interface NoteUpdateWithWhereUniqueWithoutCompanyInput {
 
 export interface NoteUpdateWithoutCompanyDataInput {
   body?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
   application?: Maybe<ApplicationUpdateOneWithoutNotesInput>;
   contact?: Maybe<ContactUpdateOneWithoutNotesInput>;
 }
 
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
+export interface UserUpdateOneRequiredWithoutNotesInput {
+  create?: Maybe<UserCreateWithoutNotesInput>;
+  update?: Maybe<UserUpdateWithoutNotesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutNotesInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateDataInput {
+export interface UserUpdateWithoutNotesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
@@ -1492,29 +1511,23 @@ export interface UserUpdateWithoutContactsDataInput {
   bio?: Maybe<String>;
   age?: Maybe<Int>;
   gender?: Maybe<GenderOptions>;
+  notes?: Maybe<NoteUpdateManyWithoutUserInput>;
   applications?: Maybe<ApplicationUpdateManyWithoutUserInput>;
 }
 
-export interface UserUpsertWithoutContactsInput {
-  update: UserUpdateWithoutContactsDataInput;
-  create: UserCreateWithoutContactsInput;
-}
-
-export interface NoteUpdateManyWithoutContactInput {
-  create?: Maybe<
-    NoteCreateWithoutContactInput[] | NoteCreateWithoutContactInput
-  >;
+export interface NoteUpdateManyWithoutUserInput {
+  create?: Maybe<NoteCreateWithoutUserInput[] | NoteCreateWithoutUserInput>;
   delete?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
   connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
   set?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
   disconnect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
   update?: Maybe<
-    | NoteUpdateWithWhereUniqueWithoutContactInput[]
-    | NoteUpdateWithWhereUniqueWithoutContactInput
+    | NoteUpdateWithWhereUniqueWithoutUserInput[]
+    | NoteUpdateWithWhereUniqueWithoutUserInput
   >;
   upsert?: Maybe<
-    | NoteUpsertWithWhereUniqueWithoutContactInput[]
-    | NoteUpsertWithWhereUniqueWithoutContactInput
+    | NoteUpsertWithWhereUniqueWithoutUserInput[]
+    | NoteUpsertWithWhereUniqueWithoutUserInput
   >;
   deleteMany?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
   updateMany?: Maybe<
@@ -1522,16 +1535,16 @@ export interface NoteUpdateManyWithoutContactInput {
   >;
 }
 
-export interface NoteUpdateWithWhereUniqueWithoutContactInput {
+export interface NoteUpdateWithWhereUniqueWithoutUserInput {
   where: NoteWhereUniqueInput;
-  data: NoteUpdateWithoutContactDataInput;
+  data: NoteUpdateWithoutUserDataInput;
 }
 
-export interface NoteUpdateWithoutContactDataInput {
+export interface NoteUpdateWithoutUserDataInput {
   body?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredInput>;
   company?: Maybe<CompanyUpdateOneWithoutNotesInput>;
   application?: Maybe<ApplicationUpdateOneWithoutNotesInput>;
+  contact?: Maybe<ContactUpdateOneWithoutNotesInput>;
 }
 
 export interface CompanyUpdateOneWithoutNotesInput {
@@ -1577,10 +1590,33 @@ export interface ApplicationUpsertWithoutNotesInput {
   create: ApplicationCreateWithoutNotesInput;
 }
 
-export interface NoteUpsertWithWhereUniqueWithoutContactInput {
+export interface ContactUpdateOneWithoutNotesInput {
+  create?: Maybe<ContactCreateWithoutNotesInput>;
+  update?: Maybe<ContactUpdateWithoutNotesDataInput>;
+  upsert?: Maybe<ContactUpsertWithoutNotesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ContactWhereUniqueInput>;
+}
+
+export interface ContactUpdateWithoutNotesDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  jobTitle?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutContactsInput>;
+  company?: Maybe<CompanyUpdateOneWithoutEmployeesInput>;
+}
+
+export interface ContactUpsertWithoutNotesInput {
+  update: ContactUpdateWithoutNotesDataInput;
+  create: ContactCreateWithoutNotesInput;
+}
+
+export interface NoteUpsertWithWhereUniqueWithoutUserInput {
   where: NoteWhereUniqueInput;
-  update: NoteUpdateWithoutContactDataInput;
-  create: NoteCreateWithoutContactInput;
+  update: NoteUpdateWithoutUserDataInput;
+  create: NoteCreateWithoutUserInput;
 }
 
 export interface NoteScalarWhereInput {
@@ -1640,6 +1676,51 @@ export interface NoteUpdateManyWithWhereNestedInput {
 
 export interface NoteUpdateManyDataInput {
   body?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutContactsInput {
+  update: UserUpdateWithoutContactsDataInput;
+  create: UserCreateWithoutContactsInput;
+}
+
+export interface NoteUpdateManyWithoutContactInput {
+  create?: Maybe<
+    NoteCreateWithoutContactInput[] | NoteCreateWithoutContactInput
+  >;
+  delete?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  connect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  set?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  disconnect?: Maybe<NoteWhereUniqueInput[] | NoteWhereUniqueInput>;
+  update?: Maybe<
+    | NoteUpdateWithWhereUniqueWithoutContactInput[]
+    | NoteUpdateWithWhereUniqueWithoutContactInput
+  >;
+  upsert?: Maybe<
+    | NoteUpsertWithWhereUniqueWithoutContactInput[]
+    | NoteUpsertWithWhereUniqueWithoutContactInput
+  >;
+  deleteMany?: Maybe<NoteScalarWhereInput[] | NoteScalarWhereInput>;
+  updateMany?: Maybe<
+    NoteUpdateManyWithWhereNestedInput[] | NoteUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface NoteUpdateWithWhereUniqueWithoutContactInput {
+  where: NoteWhereUniqueInput;
+  data: NoteUpdateWithoutContactDataInput;
+}
+
+export interface NoteUpdateWithoutContactDataInput {
+  body?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
+  company?: Maybe<CompanyUpdateOneWithoutNotesInput>;
+  application?: Maybe<ApplicationUpdateOneWithoutNotesInput>;
+}
+
+export interface NoteUpsertWithWhereUniqueWithoutContactInput {
+  where: NoteWhereUniqueInput;
+  update: NoteUpdateWithoutContactDataInput;
+  create: NoteCreateWithoutContactInput;
 }
 
 export interface ContactUpsertWithWhereUniqueWithoutCompanyInput {
@@ -1791,32 +1872,9 @@ export interface NoteUpdateWithWhereUniqueWithoutApplicationInput {
 
 export interface NoteUpdateWithoutApplicationDataInput {
   body?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
   company?: Maybe<CompanyUpdateOneWithoutNotesInput>;
   contact?: Maybe<ContactUpdateOneWithoutNotesInput>;
-}
-
-export interface ContactUpdateOneWithoutNotesInput {
-  create?: Maybe<ContactCreateWithoutNotesInput>;
-  update?: Maybe<ContactUpdateWithoutNotesDataInput>;
-  upsert?: Maybe<ContactUpsertWithoutNotesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<ContactWhereUniqueInput>;
-}
-
-export interface ContactUpdateWithoutNotesDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  jobTitle?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutContactsInput>;
-  company?: Maybe<CompanyUpdateOneWithoutEmployeesInput>;
-}
-
-export interface ContactUpsertWithoutNotesInput {
-  update: ContactUpdateWithoutNotesDataInput;
-  create: ContactCreateWithoutNotesInput;
 }
 
 export interface NoteUpsertWithWhereUniqueWithoutApplicationInput {
@@ -1878,9 +1936,9 @@ export interface ApplicationUpdateManyDataInput {
   applied?: Maybe<Boolean>;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface UserUpsertWithoutNotesInput {
+  update: UserUpdateWithoutNotesDataInput;
+  create: UserCreateWithoutNotesInput;
 }
 
 export interface NoteUpsertWithWhereUniqueWithoutCompanyInput {
@@ -1979,7 +2037,7 @@ export interface JobPostingUpdateManyMutationInput {
 export interface NoteCreateInput {
   id?: Maybe<ID_Input>;
   body: String;
-  user: UserCreateOneInput;
+  user: UserCreateOneWithoutNotesInput;
   company?: Maybe<CompanyCreateOneWithoutNotesInput>;
   application?: Maybe<ApplicationCreateOneWithoutNotesInput>;
   contact?: Maybe<ContactCreateOneWithoutNotesInput>;
@@ -1987,7 +2045,7 @@ export interface NoteCreateInput {
 
 export interface NoteUpdateInput {
   body?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
   company?: Maybe<CompanyUpdateOneWithoutNotesInput>;
   application?: Maybe<ApplicationUpdateOneWithoutNotesInput>;
   contact?: Maybe<ContactUpdateOneWithoutNotesInput>;
@@ -1995,6 +2053,19 @@ export interface NoteUpdateInput {
 
 export interface NoteUpdateManyMutationInput {
   body?: Maybe<String>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  bio?: Maybe<String>;
+  age?: Maybe<Int>;
+  gender?: Maybe<GenderOptions>;
+  contacts?: Maybe<ContactCreateManyWithoutUserInput>;
+  notes?: Maybe<NoteCreateManyWithoutUserInput>;
+  applications?: Maybe<ApplicationCreateManyWithoutUserInput>;
 }
 
 export interface UserUpdateInput {
@@ -2005,6 +2076,7 @@ export interface UserUpdateInput {
   age?: Maybe<Int>;
   gender?: Maybe<GenderOptions>;
   contacts?: Maybe<ContactUpdateManyWithoutUserInput>;
+  notes?: Maybe<NoteUpdateManyWithoutUserInput>;
   applications?: Maybe<ApplicationUpdateManyWithoutUserInput>;
 }
 
@@ -2193,6 +2265,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  notes: <T = FragmentableArray<Note>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   applications: <T = FragmentableArray<Application>>(args?: {
     where?: ApplicationWhereInput;
     orderBy?: ApplicationOrderByInput;
@@ -2225,6 +2306,15 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  notes: <T = Promise<AsyncIterator<NoteSubscription>>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   applications: <T = Promise<AsyncIterator<ApplicationSubscription>>>(args?: {
     where?: ApplicationWhereInput;
     orderBy?: ApplicationOrderByInput;
@@ -2251,6 +2341,15 @@ export interface UserNullablePromise
   contacts: <T = FragmentableArray<Contact>>(args?: {
     where?: ContactWhereInput;
     orderBy?: ContactOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notes: <T = FragmentableArray<Note>>(args?: {
+    where?: NoteWhereInput;
+    orderBy?: NoteOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
