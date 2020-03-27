@@ -11,6 +11,10 @@ type AggregateContact {
   count: Int!
 }
 
+type AggregateJobPosting {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -26,6 +30,7 @@ type Company {
   phoneNumber: String
   website: String
   employees(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact!]
+  jobPostings(where: JobPostingWhereInput, orderBy: JobPostingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [JobPosting!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -43,10 +48,16 @@ input CompanyCreateInput {
   phoneNumber: String
   website: String
   employees: ContactCreateManyWithoutCompanyInput
+  jobPostings: JobPostingCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateOneWithoutEmployeesInput {
   create: CompanyCreateWithoutEmployeesInput
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyCreateOneWithoutJobPostingsInput {
+  create: CompanyCreateWithoutJobPostingsInput
   connect: CompanyWhereUniqueInput
 }
 
@@ -56,6 +67,16 @@ input CompanyCreateWithoutEmployeesInput {
   address: String
   phoneNumber: String
   website: String
+  jobPostings: JobPostingCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutJobPostingsInput {
+  id: ID
+  name: String!
+  address: String
+  phoneNumber: String
+  website: String
+  employees: ContactCreateManyWithoutCompanyInput
 }
 
 type CompanyEdge {
@@ -114,6 +135,7 @@ input CompanyUpdateInput {
   phoneNumber: String
   website: String
   employees: ContactUpdateManyWithoutCompanyInput
+  jobPostings: JobPostingUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateManyMutationInput {
@@ -121,6 +143,13 @@ input CompanyUpdateManyMutationInput {
   address: String
   phoneNumber: String
   website: String
+}
+
+input CompanyUpdateOneRequiredWithoutJobPostingsInput {
+  create: CompanyCreateWithoutJobPostingsInput
+  update: CompanyUpdateWithoutJobPostingsDataInput
+  upsert: CompanyUpsertWithoutJobPostingsInput
+  connect: CompanyWhereUniqueInput
 }
 
 input CompanyUpdateOneWithoutEmployeesInput {
@@ -137,11 +166,25 @@ input CompanyUpdateWithoutEmployeesDataInput {
   address: String
   phoneNumber: String
   website: String
+  jobPostings: JobPostingUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutJobPostingsDataInput {
+  name: String
+  address: String
+  phoneNumber: String
+  website: String
+  employees: ContactUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpsertWithoutEmployeesInput {
   update: CompanyUpdateWithoutEmployeesDataInput!
   create: CompanyCreateWithoutEmployeesInput!
+}
+
+input CompanyUpsertWithoutJobPostingsInput {
+  update: CompanyUpdateWithoutJobPostingsDataInput!
+  create: CompanyCreateWithoutJobPostingsInput!
 }
 
 input CompanyWhereInput {
@@ -218,6 +261,9 @@ input CompanyWhereInput {
   employees_every: ContactWhereInput
   employees_some: ContactWhereInput
   employees_none: ContactWhereInput
+  jobPostings_every: JobPostingWhereInput
+  jobPostings_some: JobPostingWhereInput
+  jobPostings_none: JobPostingWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -637,6 +683,265 @@ enum GenderOptions {
   OTHER
 }
 
+type JobPosting {
+  id: ID!
+  title: String!
+  company: Company!
+  link: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type JobPostingConnection {
+  pageInfo: PageInfo!
+  edges: [JobPostingEdge]!
+  aggregate: AggregateJobPosting!
+}
+
+input JobPostingCreateInput {
+  id: ID
+  title: String!
+  company: CompanyCreateOneWithoutJobPostingsInput!
+  link: String!
+}
+
+input JobPostingCreateManyWithoutCompanyInput {
+  create: [JobPostingCreateWithoutCompanyInput!]
+  connect: [JobPostingWhereUniqueInput!]
+}
+
+input JobPostingCreateWithoutCompanyInput {
+  id: ID
+  title: String!
+  link: String!
+}
+
+type JobPostingEdge {
+  node: JobPosting!
+  cursor: String!
+}
+
+enum JobPostingOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  link_ASC
+  link_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type JobPostingPreviousValues {
+  id: ID!
+  title: String!
+  link: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input JobPostingScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [JobPostingScalarWhereInput!]
+  OR: [JobPostingScalarWhereInput!]
+  NOT: [JobPostingScalarWhereInput!]
+}
+
+type JobPostingSubscriptionPayload {
+  mutation: MutationType!
+  node: JobPosting
+  updatedFields: [String!]
+  previousValues: JobPostingPreviousValues
+}
+
+input JobPostingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: JobPostingWhereInput
+  AND: [JobPostingSubscriptionWhereInput!]
+  OR: [JobPostingSubscriptionWhereInput!]
+  NOT: [JobPostingSubscriptionWhereInput!]
+}
+
+input JobPostingUpdateInput {
+  title: String
+  company: CompanyUpdateOneRequiredWithoutJobPostingsInput
+  link: String
+}
+
+input JobPostingUpdateManyDataInput {
+  title: String
+  link: String
+}
+
+input JobPostingUpdateManyMutationInput {
+  title: String
+  link: String
+}
+
+input JobPostingUpdateManyWithoutCompanyInput {
+  create: [JobPostingCreateWithoutCompanyInput!]
+  delete: [JobPostingWhereUniqueInput!]
+  connect: [JobPostingWhereUniqueInput!]
+  set: [JobPostingWhereUniqueInput!]
+  disconnect: [JobPostingWhereUniqueInput!]
+  update: [JobPostingUpdateWithWhereUniqueWithoutCompanyInput!]
+  upsert: [JobPostingUpsertWithWhereUniqueWithoutCompanyInput!]
+  deleteMany: [JobPostingScalarWhereInput!]
+  updateMany: [JobPostingUpdateManyWithWhereNestedInput!]
+}
+
+input JobPostingUpdateManyWithWhereNestedInput {
+  where: JobPostingScalarWhereInput!
+  data: JobPostingUpdateManyDataInput!
+}
+
+input JobPostingUpdateWithoutCompanyDataInput {
+  title: String
+  link: String
+}
+
+input JobPostingUpdateWithWhereUniqueWithoutCompanyInput {
+  where: JobPostingWhereUniqueInput!
+  data: JobPostingUpdateWithoutCompanyDataInput!
+}
+
+input JobPostingUpsertWithWhereUniqueWithoutCompanyInput {
+  where: JobPostingWhereUniqueInput!
+  update: JobPostingUpdateWithoutCompanyDataInput!
+  create: JobPostingCreateWithoutCompanyInput!
+}
+
+input JobPostingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  company: CompanyWhereInput
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [JobPostingWhereInput!]
+  OR: [JobPostingWhereInput!]
+  NOT: [JobPostingWhereInput!]
+}
+
+input JobPostingWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
@@ -652,6 +957,12 @@ type Mutation {
   upsertContact(where: ContactWhereUniqueInput!, create: ContactCreateInput!, update: ContactUpdateInput!): Contact!
   deleteContact(where: ContactWhereUniqueInput!): Contact
   deleteManyContacts(where: ContactWhereInput): BatchPayload!
+  createJobPosting(data: JobPostingCreateInput!): JobPosting!
+  updateJobPosting(data: JobPostingUpdateInput!, where: JobPostingWhereUniqueInput!): JobPosting
+  updateManyJobPostings(data: JobPostingUpdateManyMutationInput!, where: JobPostingWhereInput): BatchPayload!
+  upsertJobPosting(where: JobPostingWhereUniqueInput!, create: JobPostingCreateInput!, update: JobPostingUpdateInput!): JobPosting!
+  deleteJobPosting(where: JobPostingWhereUniqueInput!): JobPosting
+  deleteManyJobPostings(where: JobPostingWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -684,6 +995,9 @@ type Query {
   contact(where: ContactWhereUniqueInput!): Contact
   contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact]!
   contactsConnection(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContactConnection!
+  jobPosting(where: JobPostingWhereUniqueInput!): JobPosting
+  jobPostings(where: JobPostingWhereInput, orderBy: JobPostingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [JobPosting]!
+  jobPostingsConnection(where: JobPostingWhereInput, orderBy: JobPostingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobPostingConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -693,6 +1007,7 @@ type Query {
 type Subscription {
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
   contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
+  jobPosting(where: JobPostingSubscriptionWhereInput): JobPostingSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
