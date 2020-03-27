@@ -17,6 +17,10 @@ const companyResolvers = {
       }
       const employees = context.prisma.company({id: parent.id}).employees({where})
       return employees
+    },
+    jobPostings: (parent, args, context, info) => {
+      const jobPostings = context.prisma.company({id: parent.id}).jobPostings()
+      return jobPostings
     }
   }, 
   Query: {
