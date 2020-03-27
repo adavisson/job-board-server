@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const { APP_SECRET, getUserId } = require('../utils');
 
 const userResolvers = {
+  User: {
+    notes: (parent, args, context, info) => {
+      const notes = context.prisma.user({id: parent.id}).notes()
+      return notes
+    }
+  },
   Query: {
     name: (parent, args, context, info) => {
       const userId = getUserId(context);
@@ -12,9 +18,10 @@ const userResolvers = {
       const userId = getUserId(context);
       return context.prisma.user({ id: userId }).contacts()
     },
-    userNotes: (parent, args, context, info) => {
-      const userId = getUserId(context);
-      return context.prisma.user({id: userId}).notes()
+    currentUser: (parent, args, context, info) => {
+      const userId = getUserId(context)
+      const user = context.prisma.user({id: userId})
+      return user
     }
   },
   Mutation: {
