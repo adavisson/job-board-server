@@ -27,6 +27,7 @@ type Contact {
   jobTitle: String
   user: User!
   company: Company
+  notes: [Note!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -39,6 +40,7 @@ type Company {
   website: String
   employees: [Contact!]!
   jobPostings: [JobPosting!]!
+  notes: [Note!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -57,6 +59,18 @@ type Application {
   applied: Boolean! @default(value: false)
   user: User!
   jobPosting: JobPosting!
+  notes: [Note!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Note {
+  id: ID! @id
+  body: String!
+  user: User!
+  company: Company
+  application: Application
+  contact: Contact
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
