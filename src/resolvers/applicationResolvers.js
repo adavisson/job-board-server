@@ -15,6 +15,7 @@ const applicationResolvers = {
         user: { connect: { id: userId } },
         jobPosting: { connect: { id: args.jobPostingId } }
       })
+      return application
     }
   }
 }
