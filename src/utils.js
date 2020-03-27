@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
-const APP_SECRET = "This_is_a_pRoJeCt";
+require('dotenv').config()
+
+const APP_SECRET = process.env.APP_SECRET;
 
 const getUserId = (context) => {
   const Authorization = context.request.get('Authorization');
