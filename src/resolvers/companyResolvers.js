@@ -3,11 +3,16 @@ const { getUserId } = require('../utils');
 const companyResolvers = {
   Query: {
     // Still needs work
-    employees: (parent, args, context, info) => {
+    employees: async (parent, args, context, info) => {
       const userId = getUserId(context)
-      const contacts = context.prisma.contacts({ 
-        company: {id: args.companyId },
-        user: { id: userId }
+      const where = {
+        AND: [
+          { company: { id: args.companyId }},
+          { user: { id: userId }}
+        ]
+      }
+      const contacts = await context.prisma.contacts({ 
+        where
       });
       return contacts
     }
