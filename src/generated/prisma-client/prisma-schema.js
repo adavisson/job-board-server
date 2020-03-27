@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateCompany {
+/* GraphQL */ `type AggregateApplication {
+  count: Int!
+}
+
+type AggregateCompany {
   count: Int!
 }
 
@@ -17,6 +21,209 @@ type AggregateJobPosting {
 
 type AggregateUser {
   count: Int!
+}
+
+type Application {
+  id: ID!
+  applied: Boolean!
+  user: User!
+  jobPosting: JobPosting!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ApplicationConnection {
+  pageInfo: PageInfo!
+  edges: [ApplicationEdge]!
+  aggregate: AggregateApplication!
+}
+
+input ApplicationCreateInput {
+  id: ID
+  applied: Boolean
+  user: UserCreateOneWithoutApplicationsInput!
+  jobPosting: JobPostingCreateOneInput!
+}
+
+input ApplicationCreateManyWithoutUserInput {
+  create: [ApplicationCreateWithoutUserInput!]
+  connect: [ApplicationWhereUniqueInput!]
+}
+
+input ApplicationCreateWithoutUserInput {
+  id: ID
+  applied: Boolean
+  jobPosting: JobPostingCreateOneInput!
+}
+
+type ApplicationEdge {
+  node: Application!
+  cursor: String!
+}
+
+enum ApplicationOrderByInput {
+  id_ASC
+  id_DESC
+  applied_ASC
+  applied_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ApplicationPreviousValues {
+  id: ID!
+  applied: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input ApplicationScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  applied: Boolean
+  applied_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [ApplicationScalarWhereInput!]
+  OR: [ApplicationScalarWhereInput!]
+  NOT: [ApplicationScalarWhereInput!]
+}
+
+type ApplicationSubscriptionPayload {
+  mutation: MutationType!
+  node: Application
+  updatedFields: [String!]
+  previousValues: ApplicationPreviousValues
+}
+
+input ApplicationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ApplicationWhereInput
+  AND: [ApplicationSubscriptionWhereInput!]
+  OR: [ApplicationSubscriptionWhereInput!]
+  NOT: [ApplicationSubscriptionWhereInput!]
+}
+
+input ApplicationUpdateInput {
+  applied: Boolean
+  user: UserUpdateOneRequiredWithoutApplicationsInput
+  jobPosting: JobPostingUpdateOneRequiredInput
+}
+
+input ApplicationUpdateManyDataInput {
+  applied: Boolean
+}
+
+input ApplicationUpdateManyMutationInput {
+  applied: Boolean
+}
+
+input ApplicationUpdateManyWithoutUserInput {
+  create: [ApplicationCreateWithoutUserInput!]
+  delete: [ApplicationWhereUniqueInput!]
+  connect: [ApplicationWhereUniqueInput!]
+  set: [ApplicationWhereUniqueInput!]
+  disconnect: [ApplicationWhereUniqueInput!]
+  update: [ApplicationUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ApplicationUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ApplicationScalarWhereInput!]
+  updateMany: [ApplicationUpdateManyWithWhereNestedInput!]
+}
+
+input ApplicationUpdateManyWithWhereNestedInput {
+  where: ApplicationScalarWhereInput!
+  data: ApplicationUpdateManyDataInput!
+}
+
+input ApplicationUpdateWithoutUserDataInput {
+  applied: Boolean
+  jobPosting: JobPostingUpdateOneRequiredInput
+}
+
+input ApplicationUpdateWithWhereUniqueWithoutUserInput {
+  where: ApplicationWhereUniqueInput!
+  data: ApplicationUpdateWithoutUserDataInput!
+}
+
+input ApplicationUpsertWithWhereUniqueWithoutUserInput {
+  where: ApplicationWhereUniqueInput!
+  update: ApplicationUpdateWithoutUserDataInput!
+  create: ApplicationCreateWithoutUserInput!
+}
+
+input ApplicationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  applied: Boolean
+  applied_not: Boolean
+  user: UserWhereInput
+  jobPosting: JobPostingWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [ApplicationWhereInput!]
+  OR: [ApplicationWhereInput!]
+  NOT: [ApplicationWhereInput!]
+}
+
+input ApplicationWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -710,6 +917,11 @@ input JobPostingCreateManyWithoutCompanyInput {
   connect: [JobPostingWhereUniqueInput!]
 }
 
+input JobPostingCreateOneInput {
+  create: JobPostingCreateInput
+  connect: JobPostingWhereUniqueInput
+}
+
 input JobPostingCreateWithoutCompanyInput {
   id: ID
   title: String!
@@ -824,6 +1036,12 @@ input JobPostingSubscriptionWhereInput {
   NOT: [JobPostingSubscriptionWhereInput!]
 }
 
+input JobPostingUpdateDataInput {
+  title: String
+  company: CompanyUpdateOneRequiredWithoutJobPostingsInput
+  link: String
+}
+
 input JobPostingUpdateInput {
   title: String
   company: CompanyUpdateOneRequiredWithoutJobPostingsInput
@@ -857,6 +1075,13 @@ input JobPostingUpdateManyWithWhereNestedInput {
   data: JobPostingUpdateManyDataInput!
 }
 
+input JobPostingUpdateOneRequiredInput {
+  create: JobPostingCreateInput
+  update: JobPostingUpdateDataInput
+  upsert: JobPostingUpsertNestedInput
+  connect: JobPostingWhereUniqueInput
+}
+
 input JobPostingUpdateWithoutCompanyDataInput {
   title: String
   link: String
@@ -865,6 +1090,11 @@ input JobPostingUpdateWithoutCompanyDataInput {
 input JobPostingUpdateWithWhereUniqueWithoutCompanyInput {
   where: JobPostingWhereUniqueInput!
   data: JobPostingUpdateWithoutCompanyDataInput!
+}
+
+input JobPostingUpsertNestedInput {
+  update: JobPostingUpdateDataInput!
+  create: JobPostingCreateInput!
 }
 
 input JobPostingUpsertWithWhereUniqueWithoutCompanyInput {
@@ -945,6 +1175,12 @@ input JobPostingWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createApplication(data: ApplicationCreateInput!): Application!
+  updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
+  updateManyApplications(data: ApplicationUpdateManyMutationInput!, where: ApplicationWhereInput): BatchPayload!
+  upsertApplication(where: ApplicationWhereUniqueInput!, create: ApplicationCreateInput!, update: ApplicationUpdateInput!): Application!
+  deleteApplication(where: ApplicationWhereUniqueInput!): Application
+  deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
   createCompany(data: CompanyCreateInput!): Company!
   updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
   updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
@@ -989,6 +1225,9 @@ type PageInfo {
 }
 
 type Query {
+  application(where: ApplicationWhereUniqueInput!): Application
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
+  applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
   company(where: CompanyWhereUniqueInput!): Company
   companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
   companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
@@ -1005,6 +1244,7 @@ type Query {
 }
 
 type Subscription {
+  application(where: ApplicationSubscriptionWhereInput): ApplicationSubscriptionPayload
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
   contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
   jobPosting(where: JobPostingSubscriptionWhereInput): JobPostingSubscriptionPayload
@@ -1020,6 +1260,7 @@ type User {
   age: Int
   gender: GenderOptions
   contacts(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1039,11 +1280,28 @@ input UserCreateInput {
   age: Int
   gender: GenderOptions
   contacts: ContactCreateManyWithoutUserInput
+  applications: ApplicationCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutApplicationsInput {
+  create: UserCreateWithoutApplicationsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutContactsInput {
   create: UserCreateWithoutContactsInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutApplicationsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  bio: String
+  age: Int
+  gender: GenderOptions
+  contacts: ContactCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutContactsInput {
@@ -1054,6 +1312,7 @@ input UserCreateWithoutContactsInput {
   bio: String
   age: Int
   gender: GenderOptions
+  applications: ApplicationCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -1120,6 +1379,7 @@ input UserUpdateInput {
   age: Int
   gender: GenderOptions
   contacts: ContactUpdateManyWithoutUserInput
+  applications: ApplicationUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1131,11 +1391,28 @@ input UserUpdateManyMutationInput {
   gender: GenderOptions
 }
 
+input UserUpdateOneRequiredWithoutApplicationsInput {
+  create: UserCreateWithoutApplicationsInput
+  update: UserUpdateWithoutApplicationsDataInput
+  upsert: UserUpsertWithoutApplicationsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutContactsInput {
   create: UserCreateWithoutContactsInput
   update: UserUpdateWithoutContactsDataInput
   upsert: UserUpsertWithoutContactsInput
   connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutApplicationsDataInput {
+  name: String
+  email: String
+  password: String
+  bio: String
+  age: Int
+  gender: GenderOptions
+  contacts: ContactUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutContactsDataInput {
@@ -1145,6 +1422,12 @@ input UserUpdateWithoutContactsDataInput {
   bio: String
   age: Int
   gender: GenderOptions
+  applications: ApplicationUpdateManyWithoutUserInput
+}
+
+input UserUpsertWithoutApplicationsInput {
+  update: UserUpdateWithoutApplicationsDataInput!
+  create: UserCreateWithoutApplicationsInput!
 }
 
 input UserUpsertWithoutContactsInput {
@@ -1238,6 +1521,9 @@ input UserWhereInput {
   contacts_every: ContactWhereInput
   contacts_some: ContactWhereInput
   contacts_none: ContactWhereInput
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
