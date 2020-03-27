@@ -1,6 +1,12 @@
 const { getUserId } = require('../utils')
 
 const jobPostingResolvers = {
+  JobPosting: {
+    company: (parent, args, context, info) => {
+      const company = context.prisma.jobPosting({id: parent.id}).company()
+      return company
+    }
+  },
   Query: {
     jobPostings: (parent, args, context, info) => {
       return context.prisma.jobPostings()
