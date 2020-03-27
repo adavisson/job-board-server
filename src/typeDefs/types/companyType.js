@@ -5,7 +5,7 @@ const companyType = gql`
     id: ID!
     name: String!
     address: String
-    phone: String
+    phoneNumber: String
     website: String
     employees: [Contact!]!
     jobPostings: [JobPosting!]!
