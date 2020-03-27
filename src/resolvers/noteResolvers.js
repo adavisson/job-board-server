@@ -5,7 +5,14 @@ const noteResolvers = {
 
   },
   Mutation: {
-
+    createNote: async (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const note = context.prisma.createNote({
+        user: {id: userId},
+        body: args.body
+      })
+      return note
+    }
   }
 }
 
