@@ -1,9 +1,6 @@
 const { getUserId } = require('../utils');
 
 const noteResolvers = {
-  Query: {
-
-  },
   Mutation: {
     createNote: async (parent, args, context, info) => {
       const userId = getUserId(context);
