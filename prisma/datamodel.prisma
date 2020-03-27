@@ -8,6 +8,7 @@ type User {
   age: Int
   gender: GenderOptions
   contacts: [Contact!]!
+  notes: [Note!]!
   applications: [Application!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
