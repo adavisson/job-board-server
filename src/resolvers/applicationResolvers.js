@@ -4,7 +4,10 @@ const applicationResolvers = {
   Query: {
     applications: (parent, args, context, info) => {
       const userId = getUserId(context);
-      const applications = context.prisma.applications({ user: { id: userId } })
+      const where = {
+        user: { id: userId }
+      }
+      const applications = context.prisma.applications({where})
       return applications
     }
   },
