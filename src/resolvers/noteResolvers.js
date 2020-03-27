@@ -1,6 +1,20 @@
 const { getUserId } = require('../utils');
 
 const noteResolvers = {
+  Note: {
+    company: (parent, args, context, info) => {
+      const company = context.prisma.note({id: parent.id}).company()
+      return company
+    },
+    contact: (parent, args, context, info) => {
+      const contact = context.prisma.note({id: parent.id}).contact()
+      return contact
+    },
+    application: (parent, args, context, info) => {
+      const application = context.prisma.note({id: parent.id}).application()
+      return application
+    }
+  },
   Mutation: {
     createNote: async (parent, args, context, info) => {
       const userId = getUserId(context);
