@@ -2,7 +2,9 @@ const { getUserId } = require('../utils');
 
 const companyResolvers = {
   Query: {
-    // Still needs work
+    companies: (parent, args, context, info) => {
+      return context.prisma.companies()
+    },
     employees: async (parent, args, context, info) => {
       const userId = getUserId(context)
       const where = {
