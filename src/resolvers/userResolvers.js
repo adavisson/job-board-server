@@ -12,7 +12,7 @@ const userResolvers = {
       const userId = getUserId(context);
       return context.prisma.user({ id: userId }).contacts()
     },
-    notes: (parent, args, context, info) => {
+    userNotes: (parent, args, context, info) => {
       const userId = getUserId(context);
       return context.prisma.user({id: userId}).notes()
     }
