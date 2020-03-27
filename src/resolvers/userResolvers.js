@@ -7,6 +7,14 @@ const userResolvers = {
     notes: (parent, args, context, info) => {
       const notes = context.prisma.user({id: parent.id}).notes()
       return notes
+    },
+    contacts: (parent, args, context, info) => {
+      const contacts = context.prisma.user({id: parent.id}).contacts()
+      return contacts
+    },
+    applications: (parent, args, context, info) => {
+      const applications = context.prisma.user({id: parent.id}).applications()
+      return applications
     }
   },
   Query: {
