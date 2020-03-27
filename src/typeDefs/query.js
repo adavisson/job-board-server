@@ -5,7 +5,6 @@ const query = gql`
     name: String!
     contacts: [Contact!]!
     companies: [Company!]!
-    employees(companyId: ID!): [Contact!]!
     jobPostings: [JobPosting!]!
     applications: [Application!]!
     currentUser: User!

@@ -9,24 +9,19 @@ const companyResolvers = {
       }
       const notes = context.prisma.company({id: parent.id}).notes({where})
       return notes
+    },
+    employees: (parent, args, context, info) => {
+      const userId = getUserId(context)
+      const where = {
+        user: {id: userId}
+      }
+      const employees = context.prisma.company({id: parent.id}).employees({where})
+      return employees
     }
   }, 
   Query: {
     companies: (parent, args, context, info) => {
       return context.prisma.companies()
-    },
-    employees: async (parent, args, context, info) => {
-      const userId = getUserId(context)
-      const where = {
-        AND: [
-          { company: { id: args.companyId }},
-          { user: { id: userId }}
-        ]
-      }
-      const contacts = await context.prisma.contacts({ 
-        where
-      });
-      return contacts
     }
   },
   Mutation: {
