@@ -19,6 +19,10 @@ type AggregateJobPosting {
   count: Int!
 }
 
+type AggregateNote {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -28,6 +32,7 @@ type Application {
   applied: Boolean!
   user: User!
   jobPosting: JobPosting!
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -43,6 +48,7 @@ input ApplicationCreateInput {
   applied: Boolean
   user: UserCreateOneWithoutApplicationsInput!
   jobPosting: JobPostingCreateOneInput!
+  notes: NoteCreateManyWithoutApplicationInput
 }
 
 input ApplicationCreateManyWithoutUserInput {
@@ -50,10 +56,23 @@ input ApplicationCreateManyWithoutUserInput {
   connect: [ApplicationWhereUniqueInput!]
 }
 
+input ApplicationCreateOneWithoutNotesInput {
+  create: ApplicationCreateWithoutNotesInput
+  connect: ApplicationWhereUniqueInput
+}
+
+input ApplicationCreateWithoutNotesInput {
+  id: ID
+  applied: Boolean
+  user: UserCreateOneWithoutApplicationsInput!
+  jobPosting: JobPostingCreateOneInput!
+}
+
 input ApplicationCreateWithoutUserInput {
   id: ID
   applied: Boolean
   jobPosting: JobPostingCreateOneInput!
+  notes: NoteCreateManyWithoutApplicationInput
 }
 
 type ApplicationEdge {
@@ -139,6 +158,7 @@ input ApplicationUpdateInput {
   applied: Boolean
   user: UserUpdateOneRequiredWithoutApplicationsInput
   jobPosting: JobPostingUpdateOneRequiredInput
+  notes: NoteUpdateManyWithoutApplicationInput
 }
 
 input ApplicationUpdateManyDataInput {
@@ -166,14 +186,35 @@ input ApplicationUpdateManyWithWhereNestedInput {
   data: ApplicationUpdateManyDataInput!
 }
 
+input ApplicationUpdateOneWithoutNotesInput {
+  create: ApplicationCreateWithoutNotesInput
+  update: ApplicationUpdateWithoutNotesDataInput
+  upsert: ApplicationUpsertWithoutNotesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ApplicationWhereUniqueInput
+}
+
+input ApplicationUpdateWithoutNotesDataInput {
+  applied: Boolean
+  user: UserUpdateOneRequiredWithoutApplicationsInput
+  jobPosting: JobPostingUpdateOneRequiredInput
+}
+
 input ApplicationUpdateWithoutUserDataInput {
   applied: Boolean
   jobPosting: JobPostingUpdateOneRequiredInput
+  notes: NoteUpdateManyWithoutApplicationInput
 }
 
 input ApplicationUpdateWithWhereUniqueWithoutUserInput {
   where: ApplicationWhereUniqueInput!
   data: ApplicationUpdateWithoutUserDataInput!
+}
+
+input ApplicationUpsertWithoutNotesInput {
+  update: ApplicationUpdateWithoutNotesDataInput!
+  create: ApplicationCreateWithoutNotesInput!
 }
 
 input ApplicationUpsertWithWhereUniqueWithoutUserInput {
@@ -201,6 +242,9 @@ input ApplicationWhereInput {
   applied_not: Boolean
   user: UserWhereInput
   jobPosting: JobPostingWhereInput
+  notes_every: NoteWhereInput
+  notes_some: NoteWhereInput
+  notes_none: NoteWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -238,6 +282,7 @@ type Company {
   website: String
   employees(where: ContactWhereInput, orderBy: ContactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contact!]
   jobPostings(where: JobPostingWhereInput, orderBy: JobPostingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [JobPosting!]
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -256,6 +301,7 @@ input CompanyCreateInput {
   website: String
   employees: ContactCreateManyWithoutCompanyInput
   jobPostings: JobPostingCreateManyWithoutCompanyInput
+  notes: NoteCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateOneWithoutEmployeesInput {
@@ -268,6 +314,11 @@ input CompanyCreateOneWithoutJobPostingsInput {
   connect: CompanyWhereUniqueInput
 }
 
+input CompanyCreateOneWithoutNotesInput {
+  create: CompanyCreateWithoutNotesInput
+  connect: CompanyWhereUniqueInput
+}
+
 input CompanyCreateWithoutEmployeesInput {
   id: ID
   name: String!
@@ -275,6 +326,7 @@ input CompanyCreateWithoutEmployeesInput {
   phoneNumber: String
   website: String
   jobPostings: JobPostingCreateManyWithoutCompanyInput
+  notes: NoteCreateManyWithoutCompanyInput
 }
 
 input CompanyCreateWithoutJobPostingsInput {
@@ -284,6 +336,17 @@ input CompanyCreateWithoutJobPostingsInput {
   phoneNumber: String
   website: String
   employees: ContactCreateManyWithoutCompanyInput
+  notes: NoteCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateWithoutNotesInput {
+  id: ID
+  name: String!
+  address: String
+  phoneNumber: String
+  website: String
+  employees: ContactCreateManyWithoutCompanyInput
+  jobPostings: JobPostingCreateManyWithoutCompanyInput
 }
 
 type CompanyEdge {
@@ -343,6 +406,7 @@ input CompanyUpdateInput {
   website: String
   employees: ContactUpdateManyWithoutCompanyInput
   jobPostings: JobPostingUpdateManyWithoutCompanyInput
+  notes: NoteUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateManyMutationInput {
@@ -368,12 +432,22 @@ input CompanyUpdateOneWithoutEmployeesInput {
   connect: CompanyWhereUniqueInput
 }
 
+input CompanyUpdateOneWithoutNotesInput {
+  create: CompanyCreateWithoutNotesInput
+  update: CompanyUpdateWithoutNotesDataInput
+  upsert: CompanyUpsertWithoutNotesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CompanyWhereUniqueInput
+}
+
 input CompanyUpdateWithoutEmployeesDataInput {
   name: String
   address: String
   phoneNumber: String
   website: String
   jobPostings: JobPostingUpdateManyWithoutCompanyInput
+  notes: NoteUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpdateWithoutJobPostingsDataInput {
@@ -382,6 +456,16 @@ input CompanyUpdateWithoutJobPostingsDataInput {
   phoneNumber: String
   website: String
   employees: ContactUpdateManyWithoutCompanyInput
+  notes: NoteUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutNotesDataInput {
+  name: String
+  address: String
+  phoneNumber: String
+  website: String
+  employees: ContactUpdateManyWithoutCompanyInput
+  jobPostings: JobPostingUpdateManyWithoutCompanyInput
 }
 
 input CompanyUpsertWithoutEmployeesInput {
@@ -392,6 +476,11 @@ input CompanyUpsertWithoutEmployeesInput {
 input CompanyUpsertWithoutJobPostingsInput {
   update: CompanyUpdateWithoutJobPostingsDataInput!
   create: CompanyCreateWithoutJobPostingsInput!
+}
+
+input CompanyUpsertWithoutNotesInput {
+  update: CompanyUpdateWithoutNotesDataInput!
+  create: CompanyCreateWithoutNotesInput!
 }
 
 input CompanyWhereInput {
@@ -471,6 +560,9 @@ input CompanyWhereInput {
   jobPostings_every: JobPostingWhereInput
   jobPostings_some: JobPostingWhereInput
   jobPostings_none: JobPostingWhereInput
+  notes_every: NoteWhereInput
+  notes_some: NoteWhereInput
+  notes_none: NoteWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -504,6 +596,7 @@ type Contact {
   jobTitle: String
   user: User!
   company: Company
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -522,6 +615,7 @@ input ContactCreateInput {
   jobTitle: String
   user: UserCreateOneWithoutContactsInput!
   company: CompanyCreateOneWithoutEmployeesInput
+  notes: NoteCreateManyWithoutContactInput
 }
 
 input ContactCreateManyWithoutCompanyInput {
@@ -534,6 +628,11 @@ input ContactCreateManyWithoutUserInput {
   connect: [ContactWhereUniqueInput!]
 }
 
+input ContactCreateOneWithoutNotesInput {
+  create: ContactCreateWithoutNotesInput
+  connect: ContactWhereUniqueInput
+}
+
 input ContactCreateWithoutCompanyInput {
   id: ID
   name: String!
@@ -541,6 +640,17 @@ input ContactCreateWithoutCompanyInput {
   phoneNumber: String
   jobTitle: String
   user: UserCreateOneWithoutContactsInput!
+  notes: NoteCreateManyWithoutContactInput
+}
+
+input ContactCreateWithoutNotesInput {
+  id: ID
+  name: String!
+  email: String
+  phoneNumber: String
+  jobTitle: String
+  user: UserCreateOneWithoutContactsInput!
+  company: CompanyCreateOneWithoutEmployeesInput
 }
 
 input ContactCreateWithoutUserInput {
@@ -550,6 +660,7 @@ input ContactCreateWithoutUserInput {
   phoneNumber: String
   jobTitle: String
   company: CompanyCreateOneWithoutEmployeesInput
+  notes: NoteCreateManyWithoutContactInput
 }
 
 type ContactEdge {
@@ -701,6 +812,7 @@ input ContactUpdateInput {
   jobTitle: String
   user: UserUpdateOneRequiredWithoutContactsInput
   company: CompanyUpdateOneWithoutEmployeesInput
+  notes: NoteUpdateManyWithoutContactInput
 }
 
 input ContactUpdateManyDataInput {
@@ -746,12 +858,31 @@ input ContactUpdateManyWithWhereNestedInput {
   data: ContactUpdateManyDataInput!
 }
 
+input ContactUpdateOneWithoutNotesInput {
+  create: ContactCreateWithoutNotesInput
+  update: ContactUpdateWithoutNotesDataInput
+  upsert: ContactUpsertWithoutNotesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ContactWhereUniqueInput
+}
+
 input ContactUpdateWithoutCompanyDataInput {
   name: String
   email: String
   phoneNumber: String
   jobTitle: String
   user: UserUpdateOneRequiredWithoutContactsInput
+  notes: NoteUpdateManyWithoutContactInput
+}
+
+input ContactUpdateWithoutNotesDataInput {
+  name: String
+  email: String
+  phoneNumber: String
+  jobTitle: String
+  user: UserUpdateOneRequiredWithoutContactsInput
+  company: CompanyUpdateOneWithoutEmployeesInput
 }
 
 input ContactUpdateWithoutUserDataInput {
@@ -760,6 +891,7 @@ input ContactUpdateWithoutUserDataInput {
   phoneNumber: String
   jobTitle: String
   company: CompanyUpdateOneWithoutEmployeesInput
+  notes: NoteUpdateManyWithoutContactInput
 }
 
 input ContactUpdateWithWhereUniqueWithoutCompanyInput {
@@ -770,6 +902,11 @@ input ContactUpdateWithWhereUniqueWithoutCompanyInput {
 input ContactUpdateWithWhereUniqueWithoutUserInput {
   where: ContactWhereUniqueInput!
   data: ContactUpdateWithoutUserDataInput!
+}
+
+input ContactUpsertWithoutNotesInput {
+  update: ContactUpdateWithoutNotesDataInput!
+  create: ContactCreateWithoutNotesInput!
 }
 
 input ContactUpsertWithWhereUniqueWithoutCompanyInput {
@@ -857,6 +994,9 @@ input ContactWhereInput {
   jobTitle_not_ends_with: String
   user: UserWhereInput
   company: CompanyWhereInput
+  notes_every: NoteWhereInput
+  notes_some: NoteWhereInput
+  notes_none: NoteWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1199,6 +1339,12 @@ type Mutation {
   upsertJobPosting(where: JobPostingWhereUniqueInput!, create: JobPostingCreateInput!, update: JobPostingUpdateInput!): JobPosting!
   deleteJobPosting(where: JobPostingWhereUniqueInput!): JobPosting
   deleteManyJobPostings(where: JobPostingWhereInput): BatchPayload!
+  createNote(data: NoteCreateInput!): Note!
+  updateNote(data: NoteUpdateInput!, where: NoteWhereUniqueInput!): Note
+  updateManyNotes(data: NoteUpdateManyMutationInput!, where: NoteWhereInput): BatchPayload!
+  upsertNote(where: NoteWhereUniqueInput!, create: NoteCreateInput!, update: NoteUpdateInput!): Note!
+  deleteNote(where: NoteWhereUniqueInput!): Note
+  deleteManyNotes(where: NoteWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1215,6 +1361,331 @@ enum MutationType {
 
 interface Node {
   id: ID!
+}
+
+type Note {
+  id: ID!
+  body: String!
+  user: User!
+  company: Company
+  application: Application
+  contact: Contact
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type NoteConnection {
+  pageInfo: PageInfo!
+  edges: [NoteEdge]!
+  aggregate: AggregateNote!
+}
+
+input NoteCreateInput {
+  id: ID
+  body: String!
+  user: UserCreateOneInput!
+  company: CompanyCreateOneWithoutNotesInput
+  application: ApplicationCreateOneWithoutNotesInput
+  contact: ContactCreateOneWithoutNotesInput
+}
+
+input NoteCreateManyWithoutApplicationInput {
+  create: [NoteCreateWithoutApplicationInput!]
+  connect: [NoteWhereUniqueInput!]
+}
+
+input NoteCreateManyWithoutCompanyInput {
+  create: [NoteCreateWithoutCompanyInput!]
+  connect: [NoteWhereUniqueInput!]
+}
+
+input NoteCreateManyWithoutContactInput {
+  create: [NoteCreateWithoutContactInput!]
+  connect: [NoteWhereUniqueInput!]
+}
+
+input NoteCreateWithoutApplicationInput {
+  id: ID
+  body: String!
+  user: UserCreateOneInput!
+  company: CompanyCreateOneWithoutNotesInput
+  contact: ContactCreateOneWithoutNotesInput
+}
+
+input NoteCreateWithoutCompanyInput {
+  id: ID
+  body: String!
+  user: UserCreateOneInput!
+  application: ApplicationCreateOneWithoutNotesInput
+  contact: ContactCreateOneWithoutNotesInput
+}
+
+input NoteCreateWithoutContactInput {
+  id: ID
+  body: String!
+  user: UserCreateOneInput!
+  company: CompanyCreateOneWithoutNotesInput
+  application: ApplicationCreateOneWithoutNotesInput
+}
+
+type NoteEdge {
+  node: Note!
+  cursor: String!
+}
+
+enum NoteOrderByInput {
+  id_ASC
+  id_DESC
+  body_ASC
+  body_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type NotePreviousValues {
+  id: ID!
+  body: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input NoteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  body: String
+  body_not: String
+  body_in: [String!]
+  body_not_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_gt: String
+  body_gte: String
+  body_contains: String
+  body_not_contains: String
+  body_starts_with: String
+  body_not_starts_with: String
+  body_ends_with: String
+  body_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [NoteScalarWhereInput!]
+  OR: [NoteScalarWhereInput!]
+  NOT: [NoteScalarWhereInput!]
+}
+
+type NoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Note
+  updatedFields: [String!]
+  previousValues: NotePreviousValues
+}
+
+input NoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: NoteWhereInput
+  AND: [NoteSubscriptionWhereInput!]
+  OR: [NoteSubscriptionWhereInput!]
+  NOT: [NoteSubscriptionWhereInput!]
+}
+
+input NoteUpdateInput {
+  body: String
+  user: UserUpdateOneRequiredInput
+  company: CompanyUpdateOneWithoutNotesInput
+  application: ApplicationUpdateOneWithoutNotesInput
+  contact: ContactUpdateOneWithoutNotesInput
+}
+
+input NoteUpdateManyDataInput {
+  body: String
+}
+
+input NoteUpdateManyMutationInput {
+  body: String
+}
+
+input NoteUpdateManyWithoutApplicationInput {
+  create: [NoteCreateWithoutApplicationInput!]
+  delete: [NoteWhereUniqueInput!]
+  connect: [NoteWhereUniqueInput!]
+  set: [NoteWhereUniqueInput!]
+  disconnect: [NoteWhereUniqueInput!]
+  update: [NoteUpdateWithWhereUniqueWithoutApplicationInput!]
+  upsert: [NoteUpsertWithWhereUniqueWithoutApplicationInput!]
+  deleteMany: [NoteScalarWhereInput!]
+  updateMany: [NoteUpdateManyWithWhereNestedInput!]
+}
+
+input NoteUpdateManyWithoutCompanyInput {
+  create: [NoteCreateWithoutCompanyInput!]
+  delete: [NoteWhereUniqueInput!]
+  connect: [NoteWhereUniqueInput!]
+  set: [NoteWhereUniqueInput!]
+  disconnect: [NoteWhereUniqueInput!]
+  update: [NoteUpdateWithWhereUniqueWithoutCompanyInput!]
+  upsert: [NoteUpsertWithWhereUniqueWithoutCompanyInput!]
+  deleteMany: [NoteScalarWhereInput!]
+  updateMany: [NoteUpdateManyWithWhereNestedInput!]
+}
+
+input NoteUpdateManyWithoutContactInput {
+  create: [NoteCreateWithoutContactInput!]
+  delete: [NoteWhereUniqueInput!]
+  connect: [NoteWhereUniqueInput!]
+  set: [NoteWhereUniqueInput!]
+  disconnect: [NoteWhereUniqueInput!]
+  update: [NoteUpdateWithWhereUniqueWithoutContactInput!]
+  upsert: [NoteUpsertWithWhereUniqueWithoutContactInput!]
+  deleteMany: [NoteScalarWhereInput!]
+  updateMany: [NoteUpdateManyWithWhereNestedInput!]
+}
+
+input NoteUpdateManyWithWhereNestedInput {
+  where: NoteScalarWhereInput!
+  data: NoteUpdateManyDataInput!
+}
+
+input NoteUpdateWithoutApplicationDataInput {
+  body: String
+  user: UserUpdateOneRequiredInput
+  company: CompanyUpdateOneWithoutNotesInput
+  contact: ContactUpdateOneWithoutNotesInput
+}
+
+input NoteUpdateWithoutCompanyDataInput {
+  body: String
+  user: UserUpdateOneRequiredInput
+  application: ApplicationUpdateOneWithoutNotesInput
+  contact: ContactUpdateOneWithoutNotesInput
+}
+
+input NoteUpdateWithoutContactDataInput {
+  body: String
+  user: UserUpdateOneRequiredInput
+  company: CompanyUpdateOneWithoutNotesInput
+  application: ApplicationUpdateOneWithoutNotesInput
+}
+
+input NoteUpdateWithWhereUniqueWithoutApplicationInput {
+  where: NoteWhereUniqueInput!
+  data: NoteUpdateWithoutApplicationDataInput!
+}
+
+input NoteUpdateWithWhereUniqueWithoutCompanyInput {
+  where: NoteWhereUniqueInput!
+  data: NoteUpdateWithoutCompanyDataInput!
+}
+
+input NoteUpdateWithWhereUniqueWithoutContactInput {
+  where: NoteWhereUniqueInput!
+  data: NoteUpdateWithoutContactDataInput!
+}
+
+input NoteUpsertWithWhereUniqueWithoutApplicationInput {
+  where: NoteWhereUniqueInput!
+  update: NoteUpdateWithoutApplicationDataInput!
+  create: NoteCreateWithoutApplicationInput!
+}
+
+input NoteUpsertWithWhereUniqueWithoutCompanyInput {
+  where: NoteWhereUniqueInput!
+  update: NoteUpdateWithoutCompanyDataInput!
+  create: NoteCreateWithoutCompanyInput!
+}
+
+input NoteUpsertWithWhereUniqueWithoutContactInput {
+  where: NoteWhereUniqueInput!
+  update: NoteUpdateWithoutContactDataInput!
+  create: NoteCreateWithoutContactInput!
+}
+
+input NoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  body: String
+  body_not: String
+  body_in: [String!]
+  body_not_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_gt: String
+  body_gte: String
+  body_contains: String
+  body_not_contains: String
+  body_starts_with: String
+  body_not_starts_with: String
+  body_ends_with: String
+  body_not_ends_with: String
+  user: UserWhereInput
+  company: CompanyWhereInput
+  application: ApplicationWhereInput
+  contact: ContactWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [NoteWhereInput!]
+  OR: [NoteWhereInput!]
+  NOT: [NoteWhereInput!]
+}
+
+input NoteWhereUniqueInput {
+  id: ID
 }
 
 type PageInfo {
@@ -1237,6 +1708,9 @@ type Query {
   jobPosting(where: JobPostingWhereUniqueInput!): JobPosting
   jobPostings(where: JobPostingWhereInput, orderBy: JobPostingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [JobPosting]!
   jobPostingsConnection(where: JobPostingWhereInput, orderBy: JobPostingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobPostingConnection!
+  note(where: NoteWhereUniqueInput!): Note
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note]!
+  notesConnection(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NoteConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1248,6 +1722,7 @@ type Subscription {
   company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
   contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
   jobPosting(where: JobPostingSubscriptionWhereInput): JobPostingSubscriptionPayload
+  note(where: NoteSubscriptionWhereInput): NoteSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -1281,6 +1756,11 @@ input UserCreateInput {
   gender: GenderOptions
   contacts: ContactCreateManyWithoutUserInput
   applications: ApplicationCreateManyWithoutUserInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutApplicationsInput {
@@ -1371,6 +1851,17 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  bio: String
+  age: Int
+  gender: GenderOptions
+  contacts: ContactUpdateManyWithoutUserInput
+  applications: ApplicationUpdateManyWithoutUserInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
@@ -1389,6 +1880,13 @@ input UserUpdateManyMutationInput {
   bio: String
   age: Int
   gender: GenderOptions
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutApplicationsInput {
@@ -1423,6 +1921,11 @@ input UserUpdateWithoutContactsDataInput {
   age: Int
   gender: GenderOptions
   applications: ApplicationUpdateManyWithoutUserInput
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutApplicationsInput {
