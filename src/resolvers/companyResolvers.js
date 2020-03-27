@@ -1,6 +1,16 @@
 const { getUserId } = require('../utils');
 
 const companyResolvers = {
+  Company: {
+    notes: (parent, args, context, info) => {
+      const userId = getUserId(context)
+      const where = {
+        user: {id: userId}
+      }
+      const notes = context.prisma.company({id: parent.id}).notes({where})
+      return notes
+    }
+  }, 
   Query: {
     companies: (parent, args, context, info) => {
       return context.prisma.companies()
@@ -17,14 +27,6 @@ const companyResolvers = {
         where
       });
       return contacts
-    },
-    companyNotes: (parent, args, context, info) => {
-      const userId = getUserId(context)
-      const where = {
-        user: {id: userId}
-      }
-      const notes = context.prisma.company({id: args.companyId}).notes({where})
-      return notes
     }
   },
   Mutation: {
