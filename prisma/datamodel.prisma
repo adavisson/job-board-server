@@ -8,6 +8,7 @@ type User {
   age: Int
   gender: GenderOptions
   contacts: [Contact!]!
+  applications: [Application!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -47,6 +48,14 @@ type JobPosting {
   title: String!
   company: Company!
   link: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Application {
+  id: ID! @id
+  applied: Boolean! @default(value: "false")
+  user: User!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
