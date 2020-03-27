@@ -8,6 +8,8 @@ const companyType = gql`
     phone: String
     website: String
     employees: [Contact!]!
+    jobPostings: [JobPosting!]!
+    notes: [Note!]!
   }
 `
 

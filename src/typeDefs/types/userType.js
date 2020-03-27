@@ -8,6 +8,9 @@ const userType = gql`
     bio: String
     age: Int
     gender: GenderOptions
+    contacts: [Contact!]!
+    applications: [Application!]!
+    notes: [Note!]!
   }
 
   enum GenderOptions {

@@ -6,6 +6,7 @@ const applicationType = gql`
     applied: Boolean
     user: User!
     jobPosting: JobPosting!
+    notes: [Note!]!
   }
 `
 
