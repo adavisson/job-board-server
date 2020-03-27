@@ -8,7 +8,7 @@ const mutation = gql`
     createCompany(name: String!, address: String, phoneNumber: String, website: String): Company
     addEmployee(companyId: ID!, contactId: ID!): Contact
     createJobPosting(title: String!, link: String!, companyId: ID!): JobPosting
-    createApplication(jobPostingId: ID!, applied: Boolean): Application
+    createApplication(jobPostingId: ID!): Application
   }
 `
 
