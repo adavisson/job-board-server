@@ -2,11 +2,13 @@ const { getUserId } = require('../utils');
 
 const companyResolvers = {
   Query: {
+    // Still needs work
     employees: (parent, args, context, info) => {
       const userId = getUserId(context)
-      const user = context.prisma.user({ id: userId });
-      const where = { user: user }
-      const contacts = context.prisma.company({ id: args.companyId }).employees(where)
+      const contacts = context.prisma.contacts({ 
+        company: {id: args.companyId },
+        user: { id: userId }
+      });
       return contacts
     }
   },
@@ -15,6 +17,20 @@ const companyResolvers = {
       const userId = getUserId(context)
       const company = await context.prisma.createCompany(args)
       return company
+    },
+    addEmployee: async (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const contact = await context.prisma.updateContact({
+        data: {
+          company: {
+            connect: {id: args.companyId}
+          }
+        },
+        where: {
+          id: args.contactId
+        }
+      })
+      return contact
     }
   }
 }
