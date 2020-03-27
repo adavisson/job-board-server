@@ -37,6 +37,16 @@ type Company {
   phoneNumber: String
   website: String
   employees: [Contact!]!
+  jobPostings: [JobPosting!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type JobPosting {
+  id: ID! @id
+  title: String!
+  company: Company!
+  link: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
