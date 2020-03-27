@@ -8,6 +8,7 @@ const query = gql`
     employees(companyId: ID!): [Contact!]!
     jobPostings: [JobPosting!]!
     applications: [Application!]!
+    notes: [Note!]!
   }
 `
 
