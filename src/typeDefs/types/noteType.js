@@ -8,6 +8,7 @@ const noteType = gql`
     company: Company
     application: Application
     contact: Contact
+    updatedAt: String
   }
 `
 
