@@ -30,6 +30,11 @@ const userResolvers = {
       const userId = getUserId(context)
       const user = context.prisma.user({id: userId})
       return user
+    },
+    notes: (parent, args, context, info) => {
+      const userId = getUserId(context)
+      const notes = context.prisma.user({id: userId}).notes()
+      return notes
     }
   },
   Mutation: {
