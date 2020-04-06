@@ -25,10 +25,10 @@ const contactResolvers = {
         jobTitle: args.jobTitle,
       }
       if (args.companyId) {
-          contactObject.company = context.prisma.company({ id: companyId })
+          contactObject.company = {connect: { id: args.companyId }}
       }
       const contact = await context.prisma.createContact({
-        ...args,
+        ...contactObject,
         user: { connect: { id: userId }}
       })
       return contact
