@@ -22,9 +22,25 @@ const noteResolvers = {
   Mutation: {
     createNote: async (parent, args, context, info) => {
       const userId = getUserId(context);
-      const note = await context.prisma.createNote({
-        user: { connect: { id: userId }},
+      const noteObject = {
         body: args.body
+      }
+
+      if (args.companyId) {
+        noteObject.company = { connect: { id: args.companyId }}
+      }
+
+      if (args.contactId) {
+        noteObject.contact = { connect: { id: args.contactId }}
+      }
+      
+      if (args.applicationId) {
+        noteObject.application = { connect: { id: args.applicationId }}
+      }
+
+      const note = await context.prisma.createNote({
+        ...noteObject,
+        user: { connect: { id: userId }}
       })
       return note
     },

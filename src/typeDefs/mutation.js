@@ -9,7 +9,7 @@ const mutation = gql`
     addEmployee(companyId: ID!, contactId: ID!): Contact
     createJobPosting(title: String!, link: String!, companyId: ID!): JobPosting
     createApplication(jobPostingId: ID!): Application
-    createNote(body: String!): Note
+    createNote(body: String!, applicationId: ID, companyId: ID contactId: ID): Note
     addNoteToCompany(noteId: ID!, companyId: ID!): Note
     addNoteToContact(noteId: ID!, contactId: ID!): Note
     addNoteToApplication(noteId: ID!, applicationId: ID!): Note
