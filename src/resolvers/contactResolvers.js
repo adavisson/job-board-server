@@ -18,6 +18,15 @@ const contactResolvers = {
   Mutation: {
     createContact: async (parent, args, context, info) => {
       const userId = getUserId(context)
+      const contactObject = {
+        name: args.name,
+        email: args.email,
+        phoneNumber: args.phoneNumber,
+        jobTitle: args.jobTitle,
+      }
+      if (args.companyId) {
+          contactObject.company = context.prisma.company({ id: companyId })
+      }
       const contact = await context.prisma.createContact({
         ...args,
         user: { connect: { id: userId }}
