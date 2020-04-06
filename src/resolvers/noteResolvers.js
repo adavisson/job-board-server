@@ -15,6 +15,13 @@ const noteResolvers = {
       return application
     }
   },
+  Query: {
+    notes: (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const notes = context.prisma.notes();
+      return notes;
+    }
+  },
   Mutation: {
     createNote: async (parent, args, context, info) => {
       const userId = getUserId(context);
