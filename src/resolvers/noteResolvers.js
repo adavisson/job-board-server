@@ -13,13 +13,10 @@ const noteResolvers = {
     application: (parent, args, context, info) => {
       const application = context.prisma.note({id: parent.id}).application()
       return application
-    }
-  },
-  Query: {
-    notes: (parent, args, context, info) => {
-      const userId = getUserId(context);
-      const notes = context.prisma.notes();
-      return notes;
+    },
+    user: (parent, args, context, info) => {
+      const user = context.prisma.note({id: parent.id}).user()
+      return user
     }
   },
   Mutation: {
