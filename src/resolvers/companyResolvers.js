@@ -24,6 +24,9 @@ const companyResolvers = {
     }
   }, 
   Query: {
+    company: (parent, args, context, info) => {
+      return context.prisma.company({id: args.id})
+    },
     companies: (parent, args, context, info) => {
       return context.prisma.companies()
     }
