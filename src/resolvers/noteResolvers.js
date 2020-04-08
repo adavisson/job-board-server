@@ -19,6 +19,14 @@ const noteResolvers = {
       return user
     }
   },
+  Query: {
+    note: async (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const notes = await context.prisma.user({id: userId}).notes()
+      const note = notes.find(note => note.id === args.id)
+      return note
+    }
+  },
   Mutation: {
     createNote: async (parent, args, context, info) => {
       const userId = getUserId(context);

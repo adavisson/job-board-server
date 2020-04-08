@@ -10,6 +10,7 @@ const query = gql`
     jobPosting(id: ID!): JobPosting
     jobPostings: [JobPosting!]!
     applications: [Application!]!
+    note(id: ID!): Note
     notes: [Note!]!
     currentUser: User!
   }
