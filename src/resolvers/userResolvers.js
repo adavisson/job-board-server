@@ -22,10 +22,6 @@ const userResolvers = {
       const userId = getUserId(context);
       return context.prisma.user({ id: userId }).name()
     },
-    contacts: (parent, args, context, info) => {
-      const userId = getUserId(context);
-      return context.prisma.user({ id: userId }).contacts()
-    },
     currentUser: (parent, args, context, info) => {
       const userId = getUserId(context)
       const user = context.prisma.user({id: userId})

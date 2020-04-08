@@ -13,7 +13,23 @@ const contactResolvers = {
       }
       const notes = context.prisma.contact({id: parent.id}).notes({where})
       return notes
+    },
+    user: (parent, args, context, info) => {
+      const userId = getUserId(context);
+      return context.prisma.contact({id: parent.id}).user()
     }
+  },
+  Query: {
+    contact: async (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const contacts = await context.prisma.user({id: userId}).contacts()
+      const contact = contacts.find((contact) => contact.id === args.id)
+      return contact
+    },
+    contacts: (parent, args, context, info) => {
+      const userId = getUserId(context);
+      return context.prisma.user({ id: userId }).contacts()
+    },
   },
   Mutation: {
     createContact: async (parent, args, context, info) => {
