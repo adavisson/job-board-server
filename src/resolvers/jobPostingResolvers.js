@@ -8,6 +8,9 @@ const jobPostingResolvers = {
     }
   },
   Query: {
+    jobPosting: (parent, args, context, info) => {
+      return context.prisma.jobPosting({id: args.id})
+    },
     jobPostings: (parent, args, context, info) => {
       return context.prisma.jobPostings()
     }

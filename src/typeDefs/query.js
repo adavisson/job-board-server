@@ -7,6 +7,7 @@ const query = gql`
     contacts: [Contact!]!
     company(id: ID!): Company
     companies: [Company!]!
+    jobPosting(id: ID!): JobPosting
     jobPostings: [JobPosting!]!
     applications: [Application!]!
     notes: [Note!]!
