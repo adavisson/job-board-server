@@ -93,6 +93,12 @@ const noteResolvers = {
         }
       })
       return note
+    },
+    deleteNote: async (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const notes = await context.prisma.user({id: userId}).notes()
+      const note = notes.find(note => note.id === args.id)
+      return await context.prisma.deleteNote({id: note.id});
     }
   }
 }
