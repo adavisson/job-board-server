@@ -11,14 +11,15 @@ const mutation = gql`
     deleteContact(id: ID!): Contact!
 
     #company
-    createCompany(name: String!, address: String, phoneNumber: String, website: String): Company
+    createCompany(name: String!, address: String, phoneNumber: String, website: String): Company!
     addEmployee(companyId: ID!, contactId: ID!): Contact
 
     #jobPosting
     createJobPosting(title: String!, link: String!, companyId: ID!): JobPosting
 
     #application
-    createApplication(jobPostingId: ID!): Application
+    createApplication(jobPostingId: ID!): Application!
+    deleteApplication(id: ID!): Application!
 
     #note
     createNote(body: String!, applicationId: ID, companyId: ID contactId: ID): Note

@@ -33,6 +33,12 @@ const applicationResolvers = {
         jobPosting: { connect: { id: args.jobPostingId } }
       });
       return application;
+    },
+    deleteApplication: async (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const applications = await context.prisma.user({id: userId}).applications()
+      const application = applications.find(application => application.id === args.id)
+      return await context.prisma.deleteApplication({id: application.id})
     }
   }
 };
