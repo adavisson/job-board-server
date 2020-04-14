@@ -48,6 +48,12 @@ const contactResolvers = {
         user: { connect: { id: userId }}
       })
       return contact
+    },
+    deleteContact: async (parent, args, context, info) => {
+      const userId = getUserId(context)
+      const contacts = await context.prisma.user({ id: userId }).contacts()
+      const contact = contacts.find(contact => contact.id === args.id)
+      return await context.prisma.deleteContact({id: contact.id})
     }
   }
 }

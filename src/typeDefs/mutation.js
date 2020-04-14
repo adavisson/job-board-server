@@ -7,7 +7,8 @@ const mutation = gql`
     login(email: String!, password: String!): AuthPayload
 
     #contact
-    createContact(name: String!, email: String, phoneNumber: String, jobTitle: String, companyId: ID): Contact
+    createContact(name: String!, email: String, phoneNumber: String, jobTitle: String, companyId: ID): Contact!
+    deleteContact(id: ID!): Contact!
 
     #company
     createCompany(name: String!, address: String, phoneNumber: String, website: String): Company
