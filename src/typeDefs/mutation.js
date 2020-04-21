@@ -9,6 +9,7 @@ const mutation = gql`
     #contact
     createContact(name: String!, email: String, phoneNumber: String, jobTitle: String, companyId: ID): Contact!
     deleteContact(id: ID!): Contact!
+    updateContact(id: ID!, name: String, email: String, phoneNumber: String, jobTitle: String, companyId: ID): Contact!
 
     #company
     createCompany(name: String!, address: String, phoneNumber: String, website: String): Company!

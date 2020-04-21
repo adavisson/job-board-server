@@ -54,6 +54,14 @@ const contactResolvers = {
       const contacts = await context.prisma.user({ id: userId }).contacts()
       const contact = contacts.find(contact => contact.id === args.id)
       return await context.prisma.deleteContact({id: contact.id})
+    },
+    updateContact: async (parent, args, context, info) => {
+      const userId = getUserId(context)
+      const {id, ...data} = args
+      return await context.prisma.updateContact({
+        data: data,
+        where: { id: id},
+      })
     }
   }
 }
