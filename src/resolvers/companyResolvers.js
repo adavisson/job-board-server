@@ -50,6 +50,14 @@ const companyResolvers = {
         }
       })
       return contact
+    },
+    updateCompany: async(parent, args, context, info) => {
+      const userId = getUserId(context)
+      const { id, ...data } = args
+      return await context.prisma.updateCompany({
+        data: { ...data },
+        where: { id: id }
+      })
     }
   }
 }
