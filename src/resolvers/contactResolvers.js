@@ -57,9 +57,12 @@ const contactResolvers = {
     },
     updateContact: async (parent, args, context, info) => {
       const userId = getUserId(context)
-      const {id, ...data} = args
+      const {id, companyId, ...data} = args
       return await context.prisma.updateContact({
-        data: data,
+        data: {
+          company: { connect: { id: companyId }},
+          ...data,
+        },
         where: { id: id},
       })
     }
