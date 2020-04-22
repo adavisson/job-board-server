@@ -29,6 +29,7 @@ const mutation = gql`
     addNoteToContact(noteId: ID!, contactId: ID!): Note
     addNoteToApplication(noteId: ID!, applicationId: ID!): Note
     deleteNote(id: ID!): Note!
+    updateNote(id: ID!, body: String): Note!
   }
 `
 
