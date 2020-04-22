@@ -99,6 +99,14 @@ const noteResolvers = {
       const notes = await context.prisma.user({id: userId}).notes()
       const note = notes.find(note => note.id === args.id)
       return await context.prisma.deleteNote({id: note.id});
+    },
+    updateNote: async (parent, args, context, info) => {
+      const userId = getUserId(context);
+      const { id, body } = args
+      return await context.prisma.updateNote({
+        data: { body },
+        where: { id: id }
+      })
     }
   }
 }
