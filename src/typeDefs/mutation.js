@@ -14,6 +14,7 @@ const mutation = gql`
     #company
     createCompany(name: String!, address: String, phoneNumber: String, website: String): Company!
     addEmployee(companyId: ID!, contactId: ID!): Contact
+    updateCompany(id: ID!, name: String, address: String, phoneNumber: String, website: String): Company!
 
     #jobPosting
     createJobPosting(title: String!, link: String!, companyId: ID!): JobPosting
